@@ -13,3 +13,4 @@ Key facts:
 ## Links
 - [Play Chipline](https://playsequenceonline.github.io/): the game, with a short how-to-play and FAQ on the home page
 - [Sequence game rules, explained simply](https://playsequenceonline.github.io/rules/): setup, turns, jacks, corners, dead cards, how to win, and rules for 2, 3, 4 players and teams
+- [Play board games online with friends](https://playsequenceonline.github.io/play-with-friends/): how to start a room, share the link on WhatsApp, player counts and teams, turn timer, computer players, and what happens if someone drops out
