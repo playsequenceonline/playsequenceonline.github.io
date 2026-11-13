@@ -3,7 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chipline Card Board Game</title>
+<title>Play a Sequence-Style Card Board Game Online Free | Chipline</title>
+<meta name="description" content="Chipline is a free five-in-a-row card board game you can play online with friends, against the computer, or pass-and-play on one phone. 2 to 12 players, no download.">
+<meta name="google-site-verification" content="sy_kgMpnAL2X_4-QqROhUp8uV9rYX0IufGYZAXoJ_OU">
+<link rel="canonical" href="https://playsequenceonline.github.io/">
+<meta property="og:title" content="Chipline: play a five-in-a-row card board game online">
+<meta property="og:description" content="Free online card board game for 2 to 12 players. Play with friends on your phones, against the computer, or pass-and-play.">
+<meta property="og:url" content="https://playsequenceonline.github.io/">
+<meta property="og:type" content="website">
+<script>
+/* Google Analytics: only on the live site, never on test copies. */
+(function(){
+  window.track = function(){};
+  if(location.hostname !== 'playsequenceonline.github.io') return;
+  var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZRBNPF2GD4';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag('js', new Date()); gtag('config', 'G-ZRBNPF2GD4');
+  window.track = function(name, params){ try{ gtag('event', name, params || {}); }catch(e){} };
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Limelight&family=Outfit:wght@400;500;600;700;800&family=Tilt+Neon&display=swap" rel="stylesheet">
 <style>
@@ -1118,6 +1138,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     state = E.newGame({names:names, teams:setup.teams});
     state.players.forEach(function(p,i){ if(bots[i]) p.bot = true; });
     sel=null; revealed=false; flash=''; save(); showGame(true); localStart();
+    track('game_start', { mode: humanCount()===1 ? 'vs_computer' : 'pass_and_play', players: setup.count });
   }
   function playIntro(){
     if(calm) return;
@@ -1356,8 +1377,10 @@ if (typeof module !== 'undefined') module.exports = Bot;
     else if(m==='o-leave') leaveRoom(true);
   });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeModal(); menu(false); } });
+  var endTracked = null;
   function showEnd(){
     if(!state || !over()) return;
+    if(endTracked !== state){ endTracked = state; track('game_end', { mode: on ? 'online' : (humanCount()===1 ? 'vs_computer' : 'pass_and_play'), players: state.players.length, moves: state.moves, result: state.draw ? 'draw' : 'win' }); }
     var s=state, h;
     if(s.draw) h='<h2>No winner this time</h2><p class="lede" style="margin:0">The table ran out of moves before any team finished its lines.</p>';
     else {
@@ -1554,6 +1577,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
       on = { code: res.view.code, uid: uid, view: null, hand: [], me: -1, busy: false, stop: null };
       try{ localStorage.setItem(ROOM, on.code); }catch(e){}
       applyView(res.view, res.hand, true);
+      if(!quiet) track(action === 'create' ? 'room_create' : 'room_join');
       on.stop = Net.watch(on.code, function(u){ if(!on) return; if(u.gone){ leaveRoom(false, 'You are no longer in that room.'); return; } applyView(u.view, u.hand, false); });
     }catch(err){
       on = null;
@@ -1612,6 +1636,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     if(!pg){                                             // a new game was dealt
       sel = null; pend = null; flash = ''; dealNow = true; closeModal();
       sfx('deal'); showGame(true);
+      if(!over()) track('game_start', { mode: 'online', players: state.players.length });
       if(over()) later(showEnd, 300);
       return;
     }
