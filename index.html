@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-skin="neon">
+<html lang="en" data-skin="day">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -949,7 +949,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
   function humanCount(){ return state ? state.players.filter(function(p){ return !p.bot; }).length : 0; }
   function seatIsBot(i){ return on ? !!(on.view.players[i] && on.view.players[i].bot) : !!(state && state.players[i] && state.players[i].bot); }
   function seatIsAway(i){ return !!(on && on.view.players[i] && on.view.players[i].away); }
-  var skin = 'neon';
+  var skin = 'day';
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   var pend = null;
@@ -976,7 +976,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
   /* ---------- Skins ---------- */
   function paintSkins(){ [].forEach.call($('skins').querySelectorAll('button'), function(b){ b.setAttribute('aria-pressed', String(b.dataset.skin===skin)); }); }
   function setSkin(k, quiet){
-    if(!SKINS[k]) k = 'neon';
+    if(!SKINS[k]) k = 'day';
     skin = k; root.setAttribute('data-skin', k);
     try{ localStorage.setItem(SKIN, k); }catch(e){}
     paintSkins();
@@ -1809,7 +1809,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
   /* ---------- Boot, keeping a game in progress across a republish ---------- */
   function start(data){
     var k = null; try{ k = localStorage.getItem(SKIN); }catch(e){}
-    setSkin((data && data.skin) || k || 'neon', true);
+    setSkin((data && data.skin) || k || 'day', true);
     paintSound();
     if(data && data.setup) setup = data.setup;
     if(data && data.state){ state = data.state; sel=null; revealed=false; showGame(false); localStart(); }
