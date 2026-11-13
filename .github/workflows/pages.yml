@@ -1,4 +1,4 @@
-# Publishes the game to GitHub Pages: unzips chipline-site.zip and deploys its files.
+# Publishes the site to GitHub Pages: every file in the repo except build-only files.
 name: Publish game
 on:
   push:
@@ -23,8 +23,9 @@ jobs:
         run: |
           mkdir -p _site
           if [ -f chipline-site.zip ]; then unzip -o chipline-site.zip -d _site; fi
-          for f in index.html README.md; do [ -f "$f" ] && cp "$f" _site/; done
-          ls -la _site
+          tar --exclude='./.git' --exclude='./.github' --exclude='./_site' --exclude='./chipline-site.zip' -cf - . | tar -xf - -C _site
+          touch _site/.nojekyll
+          ls -laR _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
