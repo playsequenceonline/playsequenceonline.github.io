@@ -1,0 +1,14 @@
+# Chipline
+
+> Chipline is a free online five-in-a-row card board game, in the style of Sequence, for 2 to 12 players. Play in the browser with friends on different phones, against computer players, or pass-and-play on one device. No download or sign-up.
+
+Key facts:
+- Price: free. Runs in any web browser on phones, tablets and computers. No download, no account.
+- Players: 2 to 12, solo against the computer, or in 2 or 3 teams.
+- Modes: online rooms with an invite link or 5-letter code, play against the computer, pass one phone around.
+- Online extras: computer players can fill empty seats, a turn timer (30, 60 or 90 seconds), and a computer takes over if someone leaves.
+- Rules in short: play a card, place your team's chip on the matching board space; two-eyed jacks are wild, one-eyed jacks remove an opponent chip; the four corners are free; two teams need two lines of five, three teams need one.
+- Chipline is an independent game and is not affiliated with the makers of the Sequence board game.
+
+## Links
+- [Play Chipline](https://playsequenceonline.github.io/): the game, with a short how-to-play and FAQ on the home page
