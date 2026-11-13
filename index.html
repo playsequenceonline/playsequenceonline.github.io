@@ -11,6 +11,7 @@
 <meta property="og:description" content="Free online card board game for 2 to 12 players. Play with friends on your phones, against the computer, or pass-and-play.">
 <meta property="og:url" content="https://playsequenceonline.github.io/">
 <meta property="og:type" content="website">
+<script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Chipline", "alternateName": "Play Sequence Online", "url": "https://playsequenceonline.github.io/"}, {"@context": "https://schema.org", "@type": ["VideoGame", "WebApplication"], "name": "Chipline", "url": "https://playsequenceonline.github.io/", "description": "Chipline is a free online five-in-a-row card board game, in the style of Sequence, for 2 to 12 players. Play in the browser with friends on different phones, against computer players, or pass-and-play on one device. No download or sign-up.", "genre": ["Board game", "Card game", "Strategy"], "gamePlatform": "Web browser", "applicationCategory": "GameApplication", "operatingSystem": "Any (web browser)", "playMode": ["MultiPlayer", "SinglePlayer"], "numberOfPlayers": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 12}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "isAccessibleForFree": true, "inLanguage": "en"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Chipline free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Chipline is completely free to play in your web browser, with no download and no sign-up."}}, {"@type": "Question", "name": "How many players can play?", "acceptedAnswer": {"@type": "Answer", "text": "From 2 to 12 players: 2, 3, 4, 6, 8, 9, 10 or 12. Bigger groups split into 2 or 3 teams that take turns in order."}}, {"@type": "Question", "name": "Can I play with friends on different phones?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tap Play with friends, start a new room and send the invite link on WhatsApp. Each friend opens the link on their own phone, types a name and joins."}}, {"@type": "Question", "name": "Can I play against the computer?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tap Play the computer for a one-tap game, or add computer players to any seat in an online room or a pass-and-play game."}}, {"@type": "Question", "name": "How do you win?", "acceptedAnswer": {"@type": "Answer", "text": "Two teams need two lines of five chips. Three teams need one line. Lines can run across, down or diagonally, and the four star corners count for every team."}}, {"@type": "Question", "name": "What do the jacks do?", "acceptedAnswer": {"@type": "Answer", "text": "Two-eyed jacks (diamonds and clubs) are wild: place a chip on any open space. One-eyed jacks (spades and hearts) remove one opponent chip that is not part of a finished line."}}]}]</script>
 <script>
 /* Google Analytics: only on the live site, never on test copies. */
 (function(){
@@ -167,6 +168,13 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
 .or{color:var(--muted);font-size:.9rem}
 .err{margin:0;color:#ff7b6b;font-weight:600;min-height:1.2em;font-size:.93rem}
 :root[data-skin="day"] .err{color:#b3261e}
+.about{grid-column:1/-1}
+.about h2{font-size:1.5rem}
+.about h3{font-size:1.1rem;margin-top:6px}
+.about .faq{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px 20px}
+.about .qa h3{font-size:1rem;margin:0 0 4px}
+.about .qa p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.5}
+body.in-step .about{display:none}
 .step{display:flex;flex-direction:column;gap:14px}
 .hello{margin:0;font-size:1.08rem;font-weight:600}
 .choices{display:grid;gap:10px}
@@ -509,6 +517,18 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
         <li>Two teams need <b>two lines</b> of five. Three teams need <b>one</b>.</li>
       </ol>
     </aside>
+    <section class="panel about" id="about">
+      <h2>Play a Sequence-style card board game online, free</h2>
+      <p class="lede">Chipline is a free online five-in-a-row card board game, in the style of Sequence, for 2 to 12 players. Play in your browser with friends on different phones, against computer players, or pass one phone around the table. No download or sign-up.</p>
+      <h3>How to play in 3 steps</h3>
+      <ol class="rules">
+        <li>Each player holds a hand of cards. Play one card and drop your team's chip on a matching space on the board.</li>
+        <li>Use jacks wisely: two-eyed jacks are wild, one-eyed jacks remove an opponent's chip.</li>
+        <li>Make lines of five in a row across, down or diagonally. Two teams need two lines; three teams need one.</li>
+      </ol>
+      <h3>Questions players ask</h3>
+      <div class="faq"><div class="qa"><h3>Is Chipline free?</h3><p>Yes. Chipline is completely free to play in your web browser, with no download and no sign-up.</p></div><div class="qa"><h3>How many players can play?</h3><p>From 2 to 12 players: 2, 3, 4, 6, 8, 9, 10 or 12. Bigger groups split into 2 or 3 teams that take turns in order.</p></div><div class="qa"><h3>Can I play with friends on different phones?</h3><p>Yes. Tap Play with friends, start a new room and send the invite link on WhatsApp. Each friend opens the link on their own phone, types a name and joins.</p></div><div class="qa"><h3>Can I play against the computer?</h3><p>Yes. Tap Play the computer for a one-tap game, or add computer players to any seat in an online room or a pass-and-play game.</p></div><div class="qa"><h3>How do you win?</h3><p>Two teams need two lines of five chips. Three teams need one line. Lines can run across, down or diagonally, and the four star corners count for every team.</p></div><div class="qa"><h3>What do the jacks do?</h3><p>Two-eyed jacks (diamonds and clubs) are wild: place a chip on any open space. One-eyed jacks (spades and hearts) remove one opponent chip that is not part of a finished line.</p></div></div>
+    </section>
   </main>
 
   <main id="lobby" class="home hidden">
