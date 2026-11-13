@@ -510,7 +510,10 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
 <div id="menuBack" class="menu-back hidden"></div>
 <div id="overlay" class="overlay hidden"><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
 
-<script>window.CHIPLINE_CONFIG = {
+<script>/* Chipline online settings for the Supabase project "Sequence".
+   This is the public (publishable) key, which is safe to ship in a web page.
+   Never put a secret or service_role key in this file. */
+window.CHIPLINE_CONFIG = {
   supabaseUrl: "https://klwyjgysrzakjejomcsb.supabase.co",
   supabaseKey: "sb_publishable_HUCAmk2h6KnUZXkpYJVIaw_CMZLf4TQ"
 };</script>
@@ -1178,8 +1181,8 @@ if (typeof module !== 'undefined') module.exports = Bot;
     }
     if(on && (s.turn!==on.me || on.busy)){
       var myTeam = s.players[on.me].team;
-      var msg = on.busy ? 'Sending your move.' : seatIsBot(s.turn) ? esc(cur.name)+' is thinking<span class="think" aria-hidden="true"><i></i><i></i><i></i></span><small>Computer player, Team '+tn(cur.team)+'. These are your cards.</small>'
-        : 'Waiting for '+esc(cur.name)+'.'+(seatIsAway(s.turn)?'<small>They are away, so the computer will play for them.</small>':'<small>Team '+tn(cur.team)+' is playing. These are your cards.</small>');
+      var msg = on.busy ? 'Sending your move.' : seatIsBot(s.turn) ? esc(cur.name)+' is thinking<span class="think" aria-hidden="true"><i></i><i></i><i></i></span><small>Computer player on Team '+tn(cur.team)+'. Your own cards are below.</small>'
+        : 'Waiting for '+esc(cur.name)+'.'+(seatIsAway(s.turn)?'<small>They are away, so the computer will play for them.</small>':'<small>Team '+tn(cur.team)+' is playing. Your own cards are below.</small>');
       tray.innerHTML = awayHtml() + (seatIsBot(s.turn) || seatIsAway(s.turn) ? '' : clockHtml()) + (flash!==''?'<div class="flash fill">Team '+tn(flash)+' made a line!</div>':'')
         +'<p class="hint">'+dot(myTeam)+'<span>'+msg+'</span></p><div class="hand wait'+(dealNow?' deal':'')+'">'+hand.map(function(c,i){ return cardHtml(c,i,hand.length); }).join('')+'</div>';
       dealNow = false; return;
