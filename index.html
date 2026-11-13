@@ -147,6 +147,30 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
 .or{color:var(--muted);font-size:.9rem}
 .err{margin:0;color:#ff7b6b;font-weight:600;min-height:1.2em;font-size:.93rem}
 :root[data-skin="day"] .err{color:#b3261e}
+.step{display:flex;flex-direction:column;gap:14px}
+.hello{margin:0;font-size:1.08rem;font-weight:600}
+.choices{display:grid;gap:10px}
+.choice{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;border-radius:16px;background:var(--inset);border:1px solid var(--panel-bd);color:var(--ink);transition:transform .12s,border-color .12s,filter .12s}
+.choice:hover{border-color:rgba(var(--accent-rgb),.7);filter:brightness(1.08)}
+.choice:active{transform:scale(.99)}
+.choice .ic{font-size:1.6rem;line-height:1;width:2.2rem;text-align:center;flex:none}
+.choice b{display:block;font-size:1.06rem}
+.choice small{display:block;color:var(--muted);font-size:.88rem;margin-top:2px}
+.choice.hot{background:linear-gradient(180deg,var(--accent-hi),var(--accent) 60%,var(--accent-lo) 160%);border-color:var(--accent-lo);color:var(--accent-ink);box-shadow:0 6px 18px rgba(var(--accent-rgb),.32)}
+.choice.hot small{color:var(--accent-ink);opacity:.85}
+.linkish{background:none;border:0;padding:4px 0;color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px;align-self:flex-start;cursor:pointer}
+.back{background:none;border:0;padding:0;color:var(--muted);font-weight:600;align-self:flex-start;cursor:pointer;font-size:.95rem}
+.steph{font-size:1.5rem}
+.lbl{font-size:.9rem;color:var(--muted);font-weight:600;margin-bottom:-4px}
+.hint{margin:6px 0 0;color:var(--muted);font-size:.88rem;text-align:center}
+.btn.wide{width:100%;padding:13px 18px;font-size:1.02rem}
+.row.nowrap{flex-wrap:nowrap}
+.online .code.grow{width:auto;flex:1}
+.joinRoom{padding-top:12px;border-top:1px solid var(--panel-bd);display:flex;flex-direction:column;gap:10px}
+.online.invite .makeRoom{display:none}
+.online.invite .joinRoom{border-top:0;padding-top:0}
+.online.invite .code,.online.invite #codeLbl{display:none}
+.simple .adv,.simple .who-btn{display:none}
 .divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--panel-bd)}
 .roomcode{font-family:var(--display);font-weight:var(--display-w);font-size:clamp(2.6rem,12vw,4.6rem);line-height:1;letter-spacing:.14em}
@@ -321,6 +345,8 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
   .home{grid-template-columns:minmax(0,1fr);gap:12px;padding-bottom:16px}
   .panel{padding:16px;gap:14px}
   .names{grid-template-columns:minmax(0,1fr)}
+  .rulesPanel{display:none}
+  body.in-step .hero,body.in-step .demo{display:none}
   .seg button{min-width:40px;padding:10px 11px}
   #countSeg{flex-wrap:nowrap;gap:5px}
   #countSeg button{flex:1;min-width:0;padding:10px 0}
@@ -387,8 +413,8 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
   <main id="home" class="home">
     <section class="panel">
       <div class="hero">
-        <h1 class="fill">Five in a line takes the table</h1>
-        <p class="lede">Play a card, claim its space on the board, and block the other team. Play online from your own phones, or pass one device around. 2 to 12 players.</p>
+        <h1 class="fill">Five in a line wins</h1>
+        <p class="lede">Play a card, claim its space, block the other team. 2 to 12 players.</p>
       </div>
       <div class="demo" aria-hidden="true">
         <div class="rib"></div>
@@ -398,37 +424,61 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
         <div class="dc red"><span>A</span><span>♦</span><b class="chip t0" style="--k:3">●</b></div>
         <div class="dc"><span>Q</span><span>♠</span><b class="chip t0" style="--k:4">●</b></div>
       </div>
-      <div class="online hidden" id="onlineBox">
-        <div class="label" style="margin:0">Play online</div>
-        <label class="name"><input id="onName" maxlength="16" placeholder="Your name" aria-label="Your name" autocomplete="nickname"></label>
-        <div class="row">
-          <button class="btn primary" id="btnCreate" type="button">Create a room</button>
-          <span class="or">or join with a code</span>
-          <label class="name code"><input id="onCode" maxlength="5" placeholder="CODE" aria-label="Room code" autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
-          <button class="btn" id="btnJoin" type="button">Join</button>
+
+      <div class="step" id="stepPick">
+        <p class="hello" id="hello">What do you want to play?</p>
+        <div class="choices">
+          <button class="choice hot hidden" id="btnResume" type="button"><span class="ic" aria-hidden="true">▶</span><span><b>Continue your game</b><small id="resumeSub">Pick up where you left off</small></span></button>
+          <button class="choice" id="btnSolo" type="button"><span class="ic" aria-hidden="true">🤖</span><span><b>Play the computer</b><small>Starts in one tap</small></span></button>
+          <button class="choice" id="goOnline" type="button"><span class="ic" aria-hidden="true">👥</span><span><b>Play with friends</b><small>Each on their own phone</small></span></button>
+          <button class="choice" id="goLocal" type="button"><span class="ic" aria-hidden="true">📱</span><span><b>Pass one phone around</b><small>Everyone at one table</small></span></button>
         </div>
-        <p class="err" id="onErr" role="alert"></p>
+        <button class="linkish" id="goRules" type="button">New here? See how to play</button>
       </div>
-      <div class="divider" id="localDivider">Pass and play on one device</div>
-      <div>
-        <div class="label" id="lblCount">Players</div>
-        <div class="row seg" id="countSeg" role="group" aria-labelledby="lblCount"></div>
+
+      <div class="step hidden" id="stepOnline">
+        <button class="back" data-back type="button">‹ Back</button>
+        <h2 class="steph" id="onlineTitle">Play with friends</h2>
+        <div class="online hidden" id="onlineBox">
+          <label class="lbl" for="onName">Your name</label>
+          <label class="name"><input id="onName" maxlength="16" placeholder="Type your name" autocomplete="nickname"></label>
+          <div class="makeRoom">
+            <button class="btn primary wide" id="btnCreate" type="button">Start a new room</button>
+            <p class="hint">You get a link to send to friends on WhatsApp.</p>
+          </div>
+          <div class="joinRoom">
+            <label class="lbl" for="onCode" id="codeLbl">Got a code from a friend?</label>
+            <div class="row nowrap">
+              <label class="name code grow"><input id="onCode" maxlength="5" placeholder="CODE" autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
+              <button class="btn" id="btnJoin" type="button">Join</button>
+            </div>
+          </div>
+          <p class="err" id="onErr" role="alert"></p>
+          <button class="linkish hidden" id="notNow" type="button">Not now, go to the home screen</button>
+        </div>
+        <div class="note" id="onlineOff"><strong>Online rooms are not connected on this copy.</strong> They switch on once the page is hosted with its game server settings filled in.</div>
       </div>
-      <div id="teamRow">
-        <div class="label" id="lblTeams">Teams</div>
-        <div class="row seg" id="teamSeg" role="group" aria-labelledby="lblTeams"></div>
-      </div>
-      <div>
-        <div class="label">Seats, in turn order</div>
-        <div class="names" id="names"></div>
-      </div>
-      <div class="row">
-        <button class="btn primary" id="btnStart" type="button">Deal the cards</button>
-        <button class="btn" id="btnSolo" type="button">Quick game vs computer</button>
-        <button class="btn hidden" id="btnResume" type="button">Resume saved game</button>
+
+      <div class="step hidden simple" id="stepLocal">
+        <button class="back" data-back type="button">‹ Back</button>
+        <h2 class="steph">Pass one phone around</h2>
+        <div>
+          <div class="label" id="lblCount">How many players?</div>
+          <div class="row seg" id="countSeg" role="group" aria-labelledby="lblCount"></div>
+        </div>
+        <div id="teamRow" class="adv">
+          <div class="label" id="lblTeams">Teams</div>
+          <div class="row seg" id="teamSeg" role="group" aria-labelledby="lblTeams"></div>
+        </div>
+        <div>
+          <div class="label">Names, in turn order</div>
+          <div class="names" id="names"></div>
+        </div>
+        <button class="linkish" id="toggleAdv" type="button">Change teams or add computer players</button>
+        <button class="btn primary wide" id="btnStart" type="button">Start game</button>
       </div>
     </section>
-    <aside class="panel">
+    <aside class="panel rulesPanel">
       <h2>How a turn works</h2>
       <ol class="rules">
         <li>Pick a card from your hand. Its open spaces light up on the board.</li>
@@ -438,7 +488,6 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
         <li>The four star corners are free and count for every team.</li>
         <li>Two teams need <b>two lines</b> of five. Three teams need <b>one</b>.</li>
       </ol>
-      <div class="note" id="onlineOff"><strong>Online rooms are not connected on this copy.</strong> They switch on once the page is hosted with its game server settings filled in.</div>
     </aside>
   </main>
 
@@ -997,8 +1046,33 @@ if (typeof module !== 'undefined') module.exports = Bot;
         +'<button type="button" class="who-btn" data-bot="'+i+'" aria-pressed="'+isBot+'" aria-label="Seat '+(i+1)+' played by '+(isBot?'computer':'a person')+'">'+(isBot?'Computer':'Person')+'</button></label>';
     }
     $('names').innerHTML = h;
-    $('btnResume').classList.toggle('hidden', !load());
+    var sv = load();
+    $('btnResume').classList.toggle('hidden', !sv);
+    if(sv) $('resumeSub').textContent = sv.players.map(function(p){ return p.name; }).slice(0,3).join(', ') + (sv.players.length>3?' and more':'');
+    var nm = savedName();
+    $('hello').textContent = nm ? 'Hi '+nm+'. What do you want to play?' : 'What do you want to play?';
   }
+  function savedName(){ try{ return localStorage.getItem(NAME)||''; }catch(e){ return ''; } }
+  function rememberName(n){ n=(n||'').trim(); if(!n) return; try{ localStorage.setItem(NAME, n); }catch(e){} }
+  var STEPS = { pick:'stepPick', online:'stepOnline', local:'stepLocal' }, curStep = 'pick';
+  function showStep(k, push){
+    curStep = k;
+    Object.keys(STEPS).forEach(function(n){ $(STEPS[n]).classList.toggle('hidden', n!==k); });
+    document.body.classList.toggle('in-step', k!=='pick');
+    if(push){ try{ history.pushState({step:k}, ''); }catch(e){} }
+    var f = k==='online' ? $('onName') : null;
+    if(f && !f.value && window.matchMedia('(pointer:fine)').matches) f.focus();
+    window.scrollTo(0,0);
+  }
+  window.addEventListener('popstate', function(){ if(!state && !on && curStep!=='pick') showStep('pick'); });
+  $('goOnline').addEventListener('click', function(){ sfx('card'); var n=savedName(); if(n && !$('onName').value) $('onName').value=n; showStep('online', true); });
+  $('goLocal').addEventListener('click', function(){ sfx('card'); var n=savedName(); if(n && !setup.names[0]) setup.names[0]=n; renderHome(); showStep('local', true); });
+  $('goRules').addEventListener('click', function(){ $('btnRules').click(); });
+  $('home').addEventListener('click', function(e){ if(e.target.closest('[data-back]')){ sfx('card'); if($('onlineBox').classList.contains('invite')){ $('notNow').click(); return; } if(history.state && history.state.step) history.back(); else showStep('pick'); } });
+  $('toggleAdv').addEventListener('click', function(){
+    var st = $('stepLocal'), simple = st.classList.toggle('simple');
+    this.textContent = simple ? 'Change teams or add computer players' : 'Hide team and computer options';
+  });
   $('countSeg').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; setup.count=+b.dataset.n; sfx('card'); renderHome(); });
   $('teamSeg').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b) return; setup.teams=+b.dataset.t; sfx('card'); renderHome(); });
   $('names').addEventListener('click',function(e){
@@ -1015,7 +1089,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     sfx('deal'); startGame();
   });
   $('names').addEventListener('input',function(e){ if(e.target.dataset.i!==undefined) setup.names[+e.target.dataset.i]=e.target.value; });
-  $('btnStart').addEventListener('click',function(){ sfx('deal'); startGame(); });
+  $('btnStart').addEventListener('click',function(){ rememberName(setup.names[0]); sfx('deal'); startGame(); });
   $('btnResume').addEventListener('click',function(){ var s=load(); if(s){ state=s; sel=null; revealed=false; flash=''; sfx('deal'); showGame(true); localStart(); } });
   /* Local computer players */
   function localStart(){
@@ -1058,7 +1132,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     $('btnQuit').textContent = on ? 'Leave room' : 'New game';
     renderGame(); if(withIntro) playIntro();
   }
-  function showHome(){ clearFx(); state=null; $('game').classList.add('hidden'); $('lobby').classList.add('hidden'); $('home').classList.remove('hidden'); $('btnQuit').classList.add('hidden'); renderHome(); }
+  function showHome(){ clearFx(); state=null; $('game').classList.add('hidden'); $('lobby').classList.add('hidden'); $('home').classList.remove('hidden'); $('btnQuit').classList.add('hidden'); renderHome(); showStep('pick'); }
 
   /* ---------- Game ---------- */
   function over(){ return state.winner!==null || state.draw; }
@@ -1442,16 +1516,35 @@ if (typeof module !== 'undefined') module.exports = Bot;
     else if(CFG && CFG.supabaseUrl && CFG.supabaseKey && !/YOUR-/.test(CFG.supabaseUrl + CFG.supabaseKey)) Net = supaNet(CFG);
     $('onlineBox').classList.toggle('hidden', !Net);
     $('onlineOff').classList.toggle('hidden', !!Net);
-    $('localDivider').classList.toggle('hidden', !Net);
     if(!Net) return;
     var saved = '', room = '';
     try{ saved = localStorage.getItem(NAME) || ''; room = localStorage.getItem(ROOM) || ''; }catch(e){}
     $('onName').value = saved;
     var linked = codeFromUrl();
-    if(linked){ $('onCode').value = linked; $('btnJoin').textContent = 'Join room ' + linked; $('btnJoin').classList.add('primary'); $('btnCreate').classList.remove('primary'); }
+    if(linked && linked !== room) inviteMode(linked);
     // Came back after a refresh or a dropped connection: return to the same seat.
     if(room && (!linked || linked === room)) enter('join', { code: room, name: saved }, true);
   }
+
+  // Opened from an invite link: only ask for a name, then join.
+  function inviteMode(code){
+    $('onlineBox').classList.add('invite');
+    $('onlineTitle').textContent = 'You are invited to room ' + code;
+    $('codeLbl').textContent = 'Room code';
+    $('onCode').value = code;
+    $('btnJoin').textContent = 'Join the game'; $('btnJoin').classList.add('primary', 'wide');
+    $('notNow').classList.remove('hidden');
+    showStep('online');
+    if($('onName').value) $('btnJoin').focus(); else $('onName').focus();
+  }
+  $('notNow').addEventListener('click', function(){
+    $('onlineBox').classList.remove('invite');
+    $('onlineTitle').textContent = 'Play with friends'; $('codeLbl').textContent = 'Got a code from a friend?';
+    $('onCode').value = ''; $('btnJoin').textContent = 'Join'; $('btnJoin').classList.remove('primary', 'wide');
+    $('notNow').classList.add('hidden'); homeErr('');
+    try{ history.replaceState(null, '', location.pathname); }catch(e){}
+    showStep('pick');
+  });
 
   async function enter(action, payload, quiet){
     homeErr(''); setBusyHome(true);
