@@ -636,7 +636,7 @@ var Engine = (function () {
     return arr;
   }
 
-  /* Original board layout: every non-jack card appears twice, placed by a fixed seed. */
+  /* Fallback board for games saved before each game had its own board. */
   var LAYOUT = (function () {
     var cards = [];
     for (var k = 0; k < 2; k++) SUITS.forEach(function (s) { RANKS.forEach(function (r) { cards.push(r + s); }); });
@@ -645,6 +645,45 @@ var Engine = (function () {
     for (var i = 0; i < 100; i++) out.push(CORNERS.indexOf(i) >= 0 ? 'FREE' : cards[n++]);
     return out;
   })();
+
+  /* A fresh, balanced board for every game. Every non-jack card appears twice, and the two copies of a card
+     are kept well apart: not within two spaces of each other, and not in the same row or column.
+     Built by shuffling, then swapping spaces until no card breaks those rules. */
+  var MIN_GAP = 3;
+  function pairBad(a, b) {
+    var ra = (a / 10) | 0, ca = a % 10, rb = (b / 10) | 0, cb = b % 10;
+    return ra === rb || ca === cb || Math.max(Math.abs(ra - rb), Math.abs(ca - cb)) < MIN_GAP;
+  }
+  function makeLayout(rng) {
+    rng = rng || Math.random;
+    for (var attempt = 0; attempt < 20; attempt++) {
+      var cards = [];
+      for (var k = 0; k < 2; k++) SUITS.forEach(function (s) { RANKS.forEach(function (r) { cards.push(r + s); }); });
+      shuffle(cards, rng);
+      var cells = [], i;
+      for (i = 0; i < 100; i++) if (CORNERS.indexOf(i) < 0) cells.push(i);
+      var at = {};                                    // cell -> card
+      cells.forEach(function (c, n) { at[c] = cards[n]; });
+      var twin = function (cell) { for (var j = 0; j < cells.length; j++) { var o = cells[j]; if (o !== cell && at[o] === at[cell]) return o; } return -1; };
+      var badAt = function (cell) { return pairBad(cell, twin(cell)); };
+      for (var step = 0; step < 20000; step++) {
+        var bad = cells.filter(badAt);
+        if (!bad.length) {
+          var out = [];
+          for (i = 0; i < 100; i++) out.push(CORNERS.indexOf(i) >= 0 ? 'FREE' : at[i]);
+          return out;
+        }
+        var a = bad[Math.floor(rng() * bad.length)], b = cells[Math.floor(rng() * cells.length)];
+        if (at[a] === at[b]) continue;
+        var before = (badAt(a) ? 1 : 0) + (badAt(b) ? 1 : 0) + (badAt(twin(a)) ? 1 : 0) + (badAt(twin(b)) ? 1 : 0);
+        var t = at[a]; at[a] = at[b]; at[b] = t;
+        var after = (badAt(a) ? 1 : 0) + (badAt(b) ? 1 : 0) + (badAt(twin(a)) ? 1 : 0) + (badAt(twin(b)) ? 1 : 0);
+        if (after > before && rng() > 0.05) { t = at[a]; at[a] = at[b]; at[b] = t; }
+      }
+    }
+    return LAYOUT.slice();
+  }
+  function layoutOf(s) { return (s && s.layout) || LAYOUT; }
 
   function isJack(c) { return c[0] === 'J'; }
   function isWild(c) { return c === 'JD' || c === 'JC'; }      // two-eyed
@@ -671,7 +710,7 @@ var Engine = (function () {
     var hs = HAND_SIZE[n], hands = players.map(function () { return []; });
     for (var c = 0; c < hs; c++) for (var p = 0; p < n; p++) hands[p].push(deck.pop());
     return {
-      v: 1, board: new Array(100).fill(null), sequences: [], deck: deck, discard: [],
+      v: 1, layout: makeLayout(rng), board: new Array(100).fill(null), sequences: [], deck: deck, discard: [],
       hands: hands, players: players, teams: teams, needed: teams === 2 ? 2 : 1,
       turn: 0, swapped: false, winner: null, draw: false, last: null, moves: 0
     };
@@ -686,12 +725,14 @@ var Engine = (function () {
   function legalCells(s, card) {
     var out = [], i;
     if (isWild(card)) {
-      for (i = 0; i < 100; i++) if (LAYOUT[i] !== 'FREE' && s.board[i] === null) out.push(i);
+      var L = layoutOf(s);
+      for (i = 0; i < 100; i++) if (L[i] !== 'FREE' && s.board[i] === null) out.push(i);
     } else if (isRemover(card)) {
       var locked = lockedSet(s), me = s.players[s.turn].team;
       for (i = 0; i < 100; i++) if (s.board[i] !== null && s.board[i] !== me && !locked[i]) out.push(i);
     } else {
-      for (i = 0; i < 100; i++) if (LAYOUT[i] === card && s.board[i] === null) out.push(i);
+      var L2 = layoutOf(s);
+      for (i = 0; i < 100; i++) if (L2[i] === card && s.board[i] === null) out.push(i);
     }
     return out;
   }
@@ -705,7 +746,7 @@ var Engine = (function () {
     if (s.deck.length) s.hands[s.turn].push(s.deck.pop());
   }
 
-  function owns(s, cell, team) { return LAYOUT[cell] === 'FREE' || s.board[cell] === team; }
+  function owns(s, cell, team) { return layoutOf(s)[cell] === 'FREE' || s.board[cell] === team; }
 
   function findNewSequences(s, cell, team) {
     var found = [], r0 = Math.floor(cell / 10), c0 = cell % 10;
@@ -737,7 +778,8 @@ var Engine = (function () {
     s.moves++;
     if (s.winner === null) {
       var full = true;
-      for (var i = 0; i < 100; i++) if (LAYOUT[i] !== 'FREE' && s.board[i] === null) { full = false; break; }
+      var L3 = layoutOf(s);
+      for (var i = 0; i < 100; i++) if (L3[i] !== 'FREE' && s.board[i] === null) { full = false; break; }
       var noCards = s.hands.every(function (h) { return h.length === 0; });
       if (noCards || (full && !s.hands.some(function (h) { return h.some(isRemover); }))) { s.draw = true; return; }
       s.turn = (s.turn + 1) % s.players.length;
@@ -788,7 +830,7 @@ var Engine = (function () {
   }
 
   return {
-    SUITS: SUITS, RANKS: RANKS, CORNERS: CORNERS, LAYOUT: LAYOUT, HAND_SIZE: HAND_SIZE, PLAYER_COUNTS: PLAYER_COUNTS,
+    SUITS: SUITS, RANKS: RANKS, CORNERS: CORNERS, LAYOUT: LAYOUT, makeLayout: makeLayout, layoutOf: layoutOf, HAND_SIZE: HAND_SIZE, PLAYER_COUNTS: PLAYER_COUNTS,
     mulberry32: mulberry32, teamOptions: teamOptions, newGame: newGame, legalCells: legalCells, isDead: isDead,
     hasAnyMove: hasAnyMove, isJack: isJack, isWild: isWild, isRemover: isRemover, lockedSet: lockedSet,
     teamScore: teamScore, play: play, swapDead: swapDead, discardAndPass: discardAndPass,
@@ -818,7 +860,8 @@ var Bot = (function () {
   var ATTACK = [0, 2, 8, 30, 120, 0];      // value of raising my count in a clean run to n
   var THREAT = [0, 1, 6, 40, 400, 0];      // danger of an opponent run holding n chips
 
-  function free(cell) { return E.LAYOUT[cell] === 'FREE'; }
+  var CORNER = {}; E.CORNERS.forEach(function (c) { CORNER[c] = true; });
+  function free(cell) { return CORNER[cell] === true; }   // corners are the free spaces on every board
   function lockedSet(s) { return E.lockedSet(s); }
 
   /* Count chips of `team` and of other teams in a run, treating free corners as everyone's. */
@@ -1189,9 +1232,9 @@ if (typeof module !== 'undefined') module.exports = Bot;
     var locked = E.lockedSet(s);
     var hop = {};
     if(fx && fx.newSeq) fx.newSeq.forEach(function(qi){ s.sequences[qi].cells.forEach(function(c,k){ hop[c]=k; }); });
-    var html = '<svg class="ribbons" id="ribbons" aria-hidden="true"></svg>';
+    var html = '<svg class="ribbons" id="ribbons" aria-hidden="true"></svg>', L = E.layoutOf(s);
     for(var i=0;i<100;i++){
-      var c = E.LAYOUT[i], cls='cell', inner, aria, extra='';
+      var c = L[i], cls='cell', inner, aria, extra='';
       if(c==='FREE'){ cls+=' free'; inner='★'; aria='Free corner'; }
       else { if(isRed(c)) cls+=' red'; inner=rank(c)+'<span class="s">'+SUIT[suit(c)]+'</span>'; aria=label(c); }
       var isT = targets.indexOf(i)>=0;
@@ -1329,7 +1372,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     if(card!==null && E.isDead(s,card) && !s.swapped) extra='<button class="btn primary" data-a="swap" type="button">Swap '+label(card)+' for a new card</button>';
     else if(card!==null && !any && !canSwap) extra='<button class="btn primary" data-a="pass" type="button">Discard '+label(card)+' and pass</button>';
     if(card!==null && pend!==null && E.legalCells(s,card).indexOf(pend)>=0){
-      var where = E.LAYOUT[pend]==='FREE' ? 'this space' : label(E.LAYOUT[pend]);
+      var Lp = E.layoutOf(s), where = Lp[pend]==='FREE' ? 'this space' : label(Lp[pend]);
       hint = E.isRemover(card) ? 'Remove the chip on '+where+'?<small>Tap again to confirm, or pick another chip.</small>' : 'Drop your chip on '+where+'?<small>Tap again to confirm, or pick another space.</small>';
       extra = '<button class="btn primary" data-a="confirm" type="button">'+(E.isRemover(card)?'Remove chip':'Place chip')+'</button>';
     }
