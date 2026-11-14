@@ -229,6 +229,24 @@ body.in-step .about{display:none}
 .think i{width:6px;height:6px;border-radius:50%;background:currentColor;animation:think 1s infinite}
 .think i:nth-child(2){animation-delay:.15s}.think i:nth-child(3){animation-delay:.3s}
 @keyframes think{50%{opacity:.25;transform:translateY(-3px)}}
+#reactWrap{position:fixed;right:14px;bottom:14px;z-index:28;display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+#reactBtn{width:50px;height:50px;border-radius:50%;border:1px solid var(--panel-bd);background:var(--panel);box-shadow:0 8px 24px var(--panel-sh);font-size:26px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+#reactBtn:hover{transform:scale(1.08)}#reactBtn[aria-expanded="true"]{outline:2px solid var(--accent)}
+#reactBtn.cool{opacity:.55}
+#reactPick{display:grid;grid-template-columns:repeat(4,44px);gap:6px;padding:8px;border-radius:16px;border:1px solid var(--panel-bd);background:var(--panel);box-shadow:0 12px 32px var(--panel-sh);animation:rise .18s ease both}
+#reactPick.hidden{display:none}
+#reactPick button{width:44px;height:44px;border:0;border-radius:12px;background:var(--inset);font-size:24px;line-height:1;cursor:pointer;transition:transform .12s}
+#reactPick button:hover,#reactPick button:focus-visible{transform:scale(1.18)}
+#reactPick button:disabled{opacity:.4;transform:none;cursor:default}
+#reactLayer{position:fixed;inset:0;pointer-events:none;z-index:27}
+.rbub{position:fixed;transform:translate(-50%,-100%);font-size:34px;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));animation:rbub 3s ease-out forwards}
+.rbub.top{position:static;transform:none;display:inline-flex;align-items:center;gap:8px;font-size:15px;font-weight:600;padding:6px 12px 6px 8px;border-radius:999px;background:var(--panel);color:var(--ink);border:1px solid var(--panel-bd);animation:rtop 3s ease-out forwards}
+.rbub.top b{font-size:26px}
+#reactTop{position:fixed;top:12px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px}
+@keyframes rbub{0%{opacity:0;transform:translate(-50%,-60%) scale(.3)}12%{opacity:1;transform:translate(-50%,-110%) scale(1.25)}22%{transform:translate(-50%,-100%) scale(1)}80%{opacity:1;transform:translate(-50%,-150%) scale(1)}100%{opacity:0;transform:translate(-50%,-190%) scale(.9)}}
+@keyframes rtop{0%{opacity:0;transform:translateY(-10px) scale(.8)}10%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.rbub,.rbub.top{animation:none}}
+@media (max-width:760px){#reactWrap{right:10px;bottom:10px}#reactBtn{width:44px;height:44px;font-size:23px}body.reacting #game .tray{padding-bottom:58px}}
 #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:30;max-width:min(92vw,460px);padding:11px 16px;border-radius:12px;background:#1a0f12;color:#fff;border:1px solid #ff7b6b;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,.5);animation:rise .3s ease both}
 
 /* Hero demo: five chips land, the line runs through them. */
@@ -600,6 +618,11 @@ body.in-step .about{display:none}
   </main>
 </div>
 <div id="toast" class="hidden" role="status"></div>
+<div id="reactWrap" class="hidden">
+  <div id="reactPick" class="hidden" role="group" aria-label="Send a reaction"></div>
+  <button id="reactBtn" type="button" aria-label="Send a reaction" aria-expanded="false">&#128522;</button>
+</div>
+<div id="reactLayer" aria-live="polite"></div>
 <div id="menuBack" class="menu-back hidden"></div>
 <div id="overlay" class="overlay hidden"><div class="modal" id="modal" role="dialog" aria-modal="true"></div></div>
 
@@ -609,7 +632,8 @@ body.in-step .about{display:none}
 window.CHIPLINE_CONFIG = {
   supabaseUrl: "https://klwyjgysrzakjejomcsb.supabase.co",
   supabaseKey: "sb_publishable_HUCAmk2h6KnUZXkpYJVIaw_CMZLf4TQ"
-};</script>
+};
+</script>
 <script>
 /* Chipline engine: pure game logic, no DOM. */
 var Engine = (function () {
@@ -1057,6 +1081,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
       else if(name==='deal'){ for(var i=0;i<6;i++) tone(a,900+i*60,t+i*.07,.04,'triangle',.05,500); }
       else if(name==='chip'){ tone(a,1500,t+.26,.03,'square',.05,700); tone(a,190,t+.26,.2,'sine',.38,70); tone(a,170,t+.42,.08,'sine',.12,110); }
       else if(name==='remove'){ tone(a,900,t,.35,'sawtooth',.08,90); tone(a,120,t,.25,'sine',.25,50); }
+      else if(name==='pop'){ tone(a,700,t,.09,'sine',.09,1250); tone(a,1400,t+.05,.06,'triangle',.04); }
       else if(name==='swap'){ tone(a,500,t,.08,'triangle',.07,300); tone(a,420,t+.1,.1,'triangle',.07,760); }
       else if(name==='turn'){ tone(a,260,t,.22,'sawtooth',.05,900); tone(a,520,t+.16,.18,'triangle',.08); }
       else if(name==='line'){ tone(a,90,t+.4,.6,'sine',.5,35); [523,659,784,1047,1319].forEach(function(f,i){ tone(a,f,t+.42+i*.08,.3,'triangle',.16); tone(a,f*2,t+.42+i*.08,.12,'sine',.05); }); }
@@ -1263,7 +1288,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     for(var t2=0;t2<s.teams;t2++){
       var sc=E.teamScore(s,t2), pips='';
       for(var p=0;p<s.needed;p++) pips+='<span class="'+(p<sc?'on':'')+'"></span>';
-      var pl = s.players.map(function(pp,idx){ return pp.team===t2 ? '<span class="'+(idx===s.turn&&!over()?'cur':'')+'">'+esc(pp.name)+(on&&idx===on.me?' (you)':'')+(seatIsBot(idx)?' (computer)':'')+(seatIsAway(idx)?' (away)':'')+'</span>' : ''; }).join('');
+      var pl = s.players.map(function(pp,idx){ return pp.team===t2 ? '<span data-r="'+idx+'" class="'+(idx===s.turn&&!over()?'cur':'')+'">'+esc(pp.name)+(on&&idx===on.me?' (you)':'')+(seatIsBot(idx)?' (computer)':'')+(seatIsAway(idx)?' (away)':'')+'</span>' : ''; }).join('');
       th += '<div class="team '+CLS[t2]+(cur.team===t2&&!over()?' active':'')+'"><div class="hd"><span class="row">'+dot(t2)+tn(t2)+'</span><span class="pips" aria-label="'+sc+' of '+s.needed+' lines">'+pips+'</span></div><div class="plist">'+pl+'</div></div>';
     }
     $('teams').innerHTML = th;
@@ -1494,7 +1519,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
   var SB_LIB = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.3/dist/umd/supabase.js';
 
   function supaNet(cfg){
-    var sb = null, uid = null, chan = null, poll = 0, lastV = 0, vis = null;
+    var sb = null, uid = null, chan = null, poll = 0, lastV = 0, vis = null, reactCb = null;
     function lib(){
       return new Promise(function(res, rej){
         if(window.supabase && window.supabase.createClient) return res();
@@ -1539,6 +1564,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
       stop(); lastV = 0;
       chan = sb.channel('room-' + code)
         .on('postgres_changes', { event: '*', schema: 'public', table: 'rooms', filter: 'code=eq.' + code }, function(){ refresh(code, cb); })
+        .on('broadcast', { event: 'react' }, function(m){ if(reactCb && m && m.payload) reactCb(m.payload); })
         .subscribe();
       // Safety net in case the live connection drops without saying so.
       poll = setInterval(async function(){
@@ -1552,12 +1578,14 @@ if (typeof module !== 'undefined') module.exports = Bot;
       document.addEventListener('visibilitychange', vis);
       return stop;
     }
-    return { init: init, call: call, watch: watch, seen: function(v){ lastV = v; } };
+    // Reactions travel over the room's live channel only. Nothing is saved.
+    function react(e){ if(chan) chan.send({ type: 'broadcast', event: 'react', payload: { u: uid, e: e } }).catch(function(){}); }
+    return { init: init, call: call, watch: watch, seen: function(v){ lastV = v; }, react: react, onReact: function(fn){ reactCb = fn; } };
   }
 
   /* Local stand-in server used for testing on a developer machine. */
   function devNet(base){
-    var uid = null, poll = 0, lastV = 0;
+    var uid = null, poll = 0, lastV = 0, bc = null, reactCb = null;
     async function init(){
       try{ uid = sessionStorage.getItem('chipline-dev-uid'); }catch(e){}
       if(!uid){ uid = 'dev-' + Math.random().toString(36).slice(2, 10); try{ sessionStorage.setItem('chipline-dev-uid', uid); }catch(e){} }
@@ -1570,17 +1598,77 @@ if (typeof module !== 'undefined') module.exports = Bot;
       if(!r.ok) throw new Error(r.error || 'Something went wrong. Try again.');
       return r;
     }
-    function stop(){ clearInterval(poll); poll = 0; }
+    function stop(){ clearInterval(poll); poll = 0; if(bc){ bc.close(); bc = null; } }
     function watch(code, cb){
       stop(); lastV = 0;
+      if(window.BroadcastChannel){ bc = new BroadcastChannel('chipline-react-' + code); bc.onmessage = function(m){ if(reactCb) reactCb(m.data); }; }
       poll = setInterval(async function(){
         try{ var r = await call('sync', { code: code }); if(r.view.version !== lastV){ lastV = r.view.version; cb({ view: r.view, hand: r.hand }); } }
         catch(e){ if(/not in this room|does not exist|has closed/.test(e.message)) cb({ gone: true }); }
       }, 350);
       return stop;
     }
-    return { init: init, call: call, watch: watch, seen: function(v){ lastV = v; } };
+    return { init: init, call: call, watch: watch, seen: function(v){ lastV = v; }, react: function(e){ if(bc) bc.postMessage({ u: uid, e: e }); }, onReact: function(fn){ reactCb = fn; } };
   }
+
+  /* ---------- Reactions (online rooms only) ---------- */
+  var REACTS = ['\u{1F602}','\u{1F44F}','\u{1F631}','\u{1F621}','\u{1F525}','\u{1F64F}','\u{1F440}','\u{1F634}'];
+  var reactLast = {}, reactMine = 0, reactCoolT = 0;
+  function reactShow(show){
+    $('reactWrap').classList.toggle('hidden', !show);
+    document.body.classList.toggle('reacting', !!show);
+    if(!show) reactPick(false);
+  }
+  function reactPick(open){
+    $('reactPick').classList.toggle('hidden', !open);
+    $('reactBtn').setAttribute('aria-expanded', String(open));
+  }
+  function reactPop(idx, e){
+    if(!on || !on.view) return;
+    var p = on.view.players[idx]; if(!p) return;
+    var lay = $('reactLayer'), el = null;
+    var box = !$('game').classList.contains('hidden') ? $('teams') : !$('lobby').classList.contains('hidden') ? $('lbSeats') : null;
+    if(box) el = box.querySelector('[data-r="' + idx + '"]');
+    var r = el && el.getBoundingClientRect();
+    var b = document.createElement('span');
+    if(r && r.width && r.top >= 40 && r.bottom <= innerHeight){
+      b.className = 'rbub'; b.textContent = e;
+      b.style.left = Math.round(r.left + Math.min(r.width, 160) / 2) + 'px';
+      b.style.top = Math.round(r.top + 4) + 'px';
+      lay.appendChild(b);
+    } else {
+      var top = $('reactTop');
+      if(!top){ top = document.createElement('div'); top.id = 'reactTop'; lay.appendChild(top); }
+      while(top.children.length > 2) top.removeChild(top.firstChild);
+      b.className = 'rbub top'; b.innerHTML = '<b>' + e + '</b>' + esc(p.name) + (idx === on.me ? ' (you)' : '');
+      top.appendChild(b);
+    }
+    setTimeout(function(){ if(b.parentNode) b.parentNode.removeChild(b); }, 3100);
+    sfx('pop');
+  }
+  function reactGot(m){
+    if(!on || !on.view || !m || REACTS.indexOf(m.e) < 0) return;
+    var idx = -1; on.view.players.forEach(function(p, i){ if(p.id === m.u && !p.bot) idx = i; });
+    if(idx < 0 || m.u === on.uid) return;
+    var now = Date.now();
+    if(reactLast[m.u] && now - reactLast[m.u] < 1500) return;
+    reactLast[m.u] = now;
+    reactPop(idx, m.e);
+  }
+  function reactSend(e){
+    var now = Date.now();
+    if(!on || now - reactMine < 2000) return;
+    reactMine = now; reactPick(false);
+    if(Net.react) Net.react(e);
+    reactPop(on.me, e);
+    $('reactBtn').classList.add('cool');
+    clearTimeout(reactCoolT); reactCoolT = setTimeout(function(){ $('reactBtn').classList.remove('cool'); }, 2000);
+  }
+  $('reactPick').innerHTML = REACTS.map(function(e){ return '<button type="button" data-re="' + e + '" aria-label="Send ' + e + '">' + e + '</button>'; }).join('');
+  $('reactBtn').addEventListener('click', function(){ reactPick($('reactPick').classList.contains('hidden')); });
+  $('reactPick').addEventListener('click', function(ev){ var x = ev.target.closest('[data-re]'); if(x) reactSend(x.dataset.re); });
+  document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape') reactPick(false); });
+  document.addEventListener('pointerdown', function(ev){ if(!ev.target.closest('#reactWrap')) reactPick(false); });
 
   var toastT = 0;
   function toast(msg){
@@ -1607,6 +1695,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     $('onlineBox').classList.toggle('hidden', !Net);
     $('onlineOff').classList.toggle('hidden', !!Net);
     if(!Net) return;
+    if(Net.onReact) Net.onReact(reactGot);
     var saved = '', room = '';
     try{ saved = localStorage.getItem(NAME) || ''; room = localStorage.getItem(ROOM) || ''; }catch(e){}
     $('onName').value = saved;
@@ -1683,6 +1772,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
   }
   function applyViewInner(view, hand, fromCall){
     if(!on) return;
+    reactShow(true);
     var prev = on.view;
     if(prev && view.version < prev.version) return;
     if(prev && view.version === prev.version && !fromCall) return;
@@ -1789,6 +1879,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
   }
   function leaveRoom(tellServer, msg){
     var o = on; on = null; clearTimeout(tickT); clock.deadline = 0;
+    reactShow(false);
     if(o && o.stop) o.stop();
     try{ localStorage.removeItem(ROOM); }catch(e){}
     if(o && tellServer) Net.call('leave', { code: o.code }).catch(function(){});
@@ -1814,7 +1905,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
       var ctl = host ? '<button class="mini" data-mv="-1" data-p="'+esc(p.id)+'" type="button"'+(i===0?' disabled':'')+' aria-label="Move '+esc(p.name)+' up">Up</button>'
         +'<button class="mini" data-mv="1" data-p="'+esc(p.id)+'" type="button"'+(i===n-1?' disabled':'')+' aria-label="Move '+esc(p.name)+' down">Down</button>'
         +(p.id!==on.uid ? '<button class="mini" data-kick="'+esc(p.id)+'" type="button" aria-label="Remove '+esc(p.name)+'">Remove</button>' : '') : '';
-      return '<div class="seat'+(p.id===on.uid?' me':'')+'">'+dot(i % v.teams)+'<span class="nm">'+esc(p.name)+'</span>'
+      return '<div class="seat'+(p.id===on.uid?' me':'')+'" data-r="'+i+'">'+dot(i % v.teams)+'<span class="nm">'+esc(p.name)+'</span>'
         +(p.id===v.host?'<span class="tag host">Host</span>':'')+(p.id===on.uid?'<span class="tag">You</span>':'')+(p.bot?'<span class="tag bot">Computer</span>':'')+ctl+'</div>';
     }).join('');
     $('lbHost').classList.toggle('hidden', !host);
