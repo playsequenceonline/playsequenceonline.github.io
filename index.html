@@ -247,6 +247,20 @@ body.in-step .about{display:none}
 @keyframes rtop{0%{opacity:0;transform:translateY(-10px) scale(.8)}10%{opacity:1;transform:none}85%{opacity:1}100%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.rbub,.rbub.top{animation:none}}
 @media (max-width:760px){#reactWrap{right:10px;bottom:10px}#reactBtn{width:44px;height:44px;font-size:23px}body.reacting #game .tray{padding-bottom:58px}}
+.acct{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:6px;padding-top:14px;border-top:1px solid var(--panel-bd)}
+.acct.hidden{display:none}
+.acct .who{flex:1 1 auto;color:var(--muted)}.acct .who b{color:var(--ink)}
+.gbtn{background:#fff;color:#1f1f1f;border:1px solid #dadce0;display:inline-flex;align-items:center;gap:10px}
+.gbtn .g{width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:700 14px/1 Arial,sans-serif;color:#fff;background:conic-gradient(#ea4335 0 25%,#fbbc05 0 50%,#34a853 0 75%,#4285f4 0)}
+.linkish.inl{display:inline;padding:0;font:inherit;font-weight:600}
+.lbwrap{max-height:52vh;overflow:auto;border:1px solid var(--panel-bd);border-radius:12px}
+.lbnote{margin:0;color:var(--muted)}
+table.lb{width:100%;border-collapse:collapse;font-size:.95rem}
+table.lb th,table.lb td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--track)}
+table.lb th{position:sticky;top:0;background:var(--inset);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+table.lb td.nm,table.lb th:nth-child(2){text-align:left}
+table.lb td.rk,table.lb th:first-child{text-align:center;width:2.5em;color:var(--muted)}
+table.lb tr.me td{background:rgba(var(--accent-rgb),.16);font-weight:700}
 #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:30;max-width:min(92vw,460px);padding:11px 16px;border-radius:12px;background:#1a0f12;color:#fff;border:1px solid #ff7b6b;font-weight:600;box-shadow:0 12px 40px rgba(0,0,0,.5);animation:rise .3s ease both}
 
 /* Hero demo: five chips land, the line runs through them. */
@@ -481,6 +495,11 @@ body.in-step .about{display:none}
           <button class="choice" id="goLocal" type="button"><span class="ic" aria-hidden="true">📱</span><span><b>Pass one phone around</b><small>Everyone at one table</small></span></button>
         </div>
         <button class="linkish" id="goRules" type="button">New here? See how to play</button>
+        <div class="acct hidden" id="acctBox">
+          <button class="btn gbtn" id="acctSignIn" type="button"><span class="g" aria-hidden="true">G</span>Sign in with Google</button>
+          <span class="who hidden" id="acctWho">Signed in as <b id="acctName"></b> · <button class="linkish inl" id="acctOut" type="button">Sign out</button></span>
+          <button class="btn" id="acctBoard" type="button">🏆 Leaderboard</button>
+        </div>
       </div>
 
       <div class="step hidden" id="stepOnline">
@@ -548,6 +567,7 @@ body.in-step .about{display:none}
       <p><a href="/rules/">Read the full rules of Sequence</a>: jacks, corners, dead cards and rules for 2, 3, 4 players and teams.</p>
       <p><a href="/play-with-friends/">How to play online with friends</a>: start a room, share the link on WhatsApp, and play on your own phones.</p>
       <p><a href="/vs-computer/">Play against the computer</a>: one tap to start, plus tips to beat it.</p>
+      <p class="small"><a href="/privacy/">Privacy policy</a>: what we store, Google sign-in and the leaderboard.</p>
       <h3>Questions players ask</h3>
       <div class="faq"><div class="qa"><h3>Is Chipline free?</h3><p>Yes. Chipline is completely free to play in your web browser, with no download and no sign-up.</p></div><div class="qa"><h3>How many players can play?</h3><p>From 2 to 12 players: 2, 3, 4, 6, 8, 9, 10 or 12. Bigger groups split into 2 or 3 teams that take turns in order.</p></div><div class="qa"><h3>Can I play with friends on different phones?</h3><p>Yes. Tap Play with friends, start a new room and send the invite link on WhatsApp. Each friend opens the link on their own phone, types a name and joins.</p></div><div class="qa"><h3>Can I play against the computer?</h3><p>Yes. Tap Play the computer for a one-tap game, or add computer players to any seat in an online room or a pass-and-play game.</p></div><div class="qa"><h3>How do you win?</h3><p>Two teams need two lines of five chips. Three teams need one line. Lines can run across, down or diagonally, and the four star corners count for every team.</p></div><div class="qa"><h3>What do the jacks do?</h3><p>Two-eyed jacks (diamonds and clubs) are wild: place a chip on any open space. One-eyed jacks (spades and hearts) remove one opponent chip that is not part of a finished line.</p></div></div>
     </section>
@@ -1464,6 +1484,8 @@ if (typeof module !== 'undefined') module.exports = Bot;
     if(e.target===$('overlay')){ closeModal(); return; }
     var a=e.target.closest('[data-m]'); if(!a) return;
     var m=a.dataset.m; closeModal();
+    if(m==='board'){ openBoard(); return; }
+    if(m==='google'){ startGoogle(); return; }
     if(m==='again') rematch(); else if(m==='setup'){ try{localStorage.removeItem(SAVE);}catch(err){} showHome(); }
     else if(m==='o-rematch' || m==='o-lobby') onlineDo(m.slice(2));
     else if(m==='o-leave') leaveRoom(true);
@@ -1484,7 +1506,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
       rain(cols, 220);
       for(var i=0;i<12;i++) (function(i){ later(function(){ burst(W*(.1+Math.random()*.8), H*(.12+Math.random()*.45), 80, cols, 9+Math.random()*4); }, i*330); })(i);
     }
-    if(on) openModal(h+(on.view.host===on.uid
+    if(on) openModal(h+acctNote()+(on.view.host===on.uid
       ? '<div class="row"><button class="btn primary" data-m="o-rematch" type="button">Play again</button><button class="btn" data-m="o-lobby" type="button">Back to lobby</button><button class="btn ghost" data-m="close" type="button">Look at the board</button></div>'
       : '<p class="lede" style="margin:0">Waiting for the host to start the next game.</p><div class="row"><button class="btn primary" data-m="close" type="button">Look at the board</button></div>'));
     else openModal(h+'<div class="row"><button class="btn primary" data-m="again" type="button">Play again, same seats</button><button class="btn" data-m="setup" type="button">Change players</button><button class="btn ghost" data-m="close" type="button">Look at the board</button></div>');
@@ -1529,9 +1551,13 @@ if (typeof module !== 'undefined') module.exports = Bot;
         document.head.appendChild(s);
       });
     }
-    async function init(){
+    async function client(){
       await lib();
       if(!sb) sb = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey);
+      return sb;
+    }
+    async function init(){
+      await client();
       var s = await sb.auth.getSession();
       var user = s.data && s.data.session && s.data.session.user;
       if(!user){
@@ -1578,9 +1604,40 @@ if (typeof module !== 'undefined') module.exports = Bot;
       document.addEventListener('visibilitychange', vis);
       return stop;
     }
+    /* Accounts: everyone starts as a guest. Google sign-in turns the guest into a saved player
+       (same id, so a room you are in keeps working) or, on a new device, signs into the existing one. */
+    async function account(){
+      await client();
+      var s = await sb.auth.getSession(), u = s.data && s.data.session && s.data.session.user;
+      if(!u || u.is_anonymous) return { signed: false };
+      var m = u.user_metadata || {}, full = m.full_name || m.name || '';
+      return { signed: true, id: u.id, first: String(full).trim().split(/\s+/)[0] || 'Player', email: u.email || '' };
+    }
+    async function google(){
+      await client();
+      var back = location.origin + location.pathname;
+      var s = await sb.auth.getSession(), u = s.data && s.data.session && s.data.session.user;
+      var r = (u && u.is_anonymous) ? await sb.auth.linkIdentity({ provider: 'google', options: { redirectTo: back } })
+                                    : await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: back } });
+      if(r.error){
+        if(u && u.is_anonymous) { var r2 = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: back } }); if(!r2.error) return; }
+        throw new Error('Google sign-in is not available right now. Try again later.');
+      }
+    }
+    async function signOut(){ await client(); await sb.auth.signOut(); uid = null; }
+    async function board(meId){
+      await client();
+      var top = await sb.from('player_stats').select('user_id, name, wins, games').order('wins', { ascending: false }).order('games', { ascending: true }).limit(50);
+      if(top.error) throw new Error('Could not load the leaderboard. Check your connection and try again.');
+      var mine = null;
+      if(meId){ var m = await sb.from('player_stats').select('user_id, name, wins, games').eq('user_id', meId).maybeSingle(); mine = m.data || null; }
+      return { top: top.data || [], mine: mine };
+    }
+
     // Reactions travel over the room's live channel only. Nothing is saved.
     function react(e){ if(chan) chan.send({ type: 'broadcast', event: 'react', payload: { u: uid, e: e } }).catch(function(){}); }
-    return { init: init, call: call, watch: watch, seen: function(v){ lastV = v; }, react: react, onReact: function(fn){ reactCb = fn; } };
+    return { init: init, call: call, watch: watch, seen: function(v){ lastV = v; }, react: react, onReact: function(fn){ reactCb = fn; },
+      account: account, google: google, signOut: signOut, board: board };
   }
 
   /* Local stand-in server used for testing on a developer machine. */
@@ -1670,6 +1727,73 @@ if (typeof module !== 'undefined') module.exports = Bot;
   document.addEventListener('keydown', function(ev){ if(ev.key === 'Escape') reactPick(false); });
   document.addEventListener('pointerdown', function(ev){ if(!ev.target.closest('#reactWrap')) reactPick(false); });
 
+  /* ---------- Google sign-in and leaderboard ---------- */
+  var acct = { signed: false };
+  function paintAcct(){
+    var box = $('acctBox'); if(!box) return;
+    if(!Net || !Net.account){ box.classList.add('hidden'); return; }
+    box.classList.remove('hidden');
+    $('acctSignIn').classList.toggle('hidden', acct.signed);
+    $('acctWho').classList.toggle('hidden', !acct.signed);
+    if(acct.signed) $('acctName').textContent = acct.first;
+  }
+  async function loadAcct(){
+    if(!Net || !Net.account) return;
+    try{ acct = await Net.account(); }catch(e){ acct = { signed: false }; }
+    if(acct.signed && !$('onName').value) $('onName').value = acct.first.slice(0, 16);
+    paintAcct();
+  }
+  function authReturn(){
+    var h = location.hash || '', q = location.search || '';
+    return /access_token=|error_code=|error_description=/.test(h) || /[?&](code|error)=/.test(q);
+  }
+  function authError(){
+    var t = (location.hash || '').slice(1) + '&' + (location.search || '').slice(1), m = /error_code=([^&]+)/.exec(t);
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+  function cleanUrl(){
+    try{ history.replaceState(null, '', location.pathname + (codeFromUrl() ? '?room=' + codeFromUrl() : '')); }catch(e){}
+  }
+  async function startGoogle(){
+    if(on){ toast('Finish or leave the room first, then sign in.'); return; }
+    var framed = false; try{ framed = window.top !== window.self; }catch(e){ framed = true; }
+    if(framed){ window.open('https://playsequenceonline.github.io/', '_blank', 'noopener'); toast('Google sign-in opens on the Chipline website.'); return; }
+    $('acctSignIn').disabled = true;
+    try{ await Net.google(); }
+    catch(e){ $('acctSignIn').disabled = false; toast(e.message); }
+  }
+  function rowHtml(r, i, meId){
+    var pct = r.games ? Math.round(100 * r.wins / r.games) : 0;
+    return '<tr'+(r.user_id===meId?' class="me"':'')+'><td class="rk">'+(i+1)+'</td><td class="nm">'+esc(r.name)+(r.user_id===meId?' <span class="tag">You</span>':'')+'</td><td>'+r.wins+'</td><td>'+r.games+'</td><td>'+pct+'%</td></tr>';
+  }
+  async function openBoard(){
+    openModal('<h2>Leaderboard</h2><p class="lede" style="margin:0">Loading…</p><div class="row"><button class="btn primary" data-m="close" type="button">Close</button></div>');
+    var d;
+    try{ d = await Net.board(acct.signed ? acct.id : null); }
+    catch(e){ openModal('<h2>Leaderboard</h2><p class="lede" style="margin:0">'+esc(e.message)+'</p><div class="row"><button class="btn primary" data-m="close" type="button">Close</button></div>'); return; }
+    var inTop = d.top.some(function(r){ return acct.signed && r.user_id === acct.id; });
+    var rows = d.top.map(function(r, i){ return rowHtml(r, i, acct.signed ? acct.id : null); }).join('');
+    var body = d.top.length ? '<div class="lbwrap"><table class="lb"><thead><tr><th>#</th><th>Player</th><th>Wins</th><th>Games</th><th>Win %</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
+      : '<p class="lede" style="margin:0">No wins yet. Be the first: sign in, start a room and beat a friend.</p>';
+    var you = !acct.signed ? '<p class="lbnote">You are playing as a guest. <button class="linkish inl" data-m="google" type="button">Sign in with Google</button> to get on the board.</p>'
+      : (d.mine && !inTop) ? '<p class="lbnote">You: '+d.mine.wins+' wins from '+d.mine.games+' games.</p>'
+      : !d.mine ? '<p class="lbnote">Signed in as '+esc(acct.first)+'. Your first online game with a friend puts you on the board.</p>' : '';
+    openModal('<h2>Leaderboard</h2><p class="lede" style="margin:0">Wins in online games with at least two real people. Games against only the computer do not count.</p>'+body+you+'<div class="row"><button class="btn primary" data-m="close" type="button">Close</button></div>');
+  }
+  // Short line for the game-over screen in online rooms.
+  function acctNote(){
+    if(!on || !on.view || !Net || !Net.account) return '';
+    var people = on.view.players.filter(function(p){ return !p.bot; }).length;
+    if(people < 2) return '<p class="lbnote">Games against only the computer do not count on the leaderboard.</p>';
+    return acct.signed ? '<p class="lbnote">This game counts on the leaderboard. <button class="linkish inl" data-m="board" type="button">See leaderboard</button></p>'
+      : '<p class="lbnote">Sign in with Google on the home screen to count your wins. <button class="linkish inl" data-m="board" type="button">See leaderboard</button></p>';
+  }
+  if($('acctSignIn')){
+    $('acctSignIn').addEventListener('click', startGoogle);
+    $('acctOut').addEventListener('click', async function(){ try{ await Net.signOut(); }catch(e){} acct = { signed: false }; paintAcct(); toast('Signed out. You are playing as a guest.'); });
+    $('acctBoard').addEventListener('click', function(){ sfx('card'); openBoard(); });
+  }
+
   var toastT = 0;
   function toast(msg){
     var t = $('toast'); t.textContent = msg; t.classList.remove('hidden');
@@ -1696,6 +1820,11 @@ if (typeof module !== 'undefined') module.exports = Bot;
     $('onlineOff').classList.toggle('hidden', !!Net);
     if(!Net) return;
     if(Net.onReact) Net.onReact(reactGot);
+    if(Net.account && authReturn()){
+      var err = authError();
+      if(err === 'identity_already_exists'){ cleanUrl(); Net.signOut().then(function(){ return Net.google(); }).catch(function(e){ toast(e.message); }); }
+      else Net.account().then(function(a){ acct = a; paintAcct(); cleanUrl(); if(a.signed){ toast('Signed in as ' + a.first + '. Your online wins now count.'); if(!$('onName').value) $('onName').value = a.first.slice(0, 16); } else if(err) toast('Google sign-in did not finish. Try again.'); });
+    } else loadAcct();
     var saved = '', room = '';
     try{ saved = localStorage.getItem(NAME) || ''; room = localStorage.getItem(ROOM) || ''; }catch(e){}
     $('onName').value = saved;
