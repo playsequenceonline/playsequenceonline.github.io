@@ -11,6 +11,17 @@
 <meta property="og:description" content="Free online card board game for 2 to 12 players. Play with friends on your phones, against the computer, or pass-and-play.">
 <meta property="og:url" content="https://playsequenceonline.github.io/">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://playsequenceonline.github.io/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Chipline game board with red and blue chips and a line of five">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://playsequenceonline.github.io/og.jpg">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icon-180.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#efe6d6">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "Chipline", "alternateName": "Play Sequence Online", "url": "https://playsequenceonline.github.io/"}, {"@context": "https://schema.org", "@type": ["VideoGame", "WebApplication"], "name": "Chipline", "url": "https://playsequenceonline.github.io/", "description": "Chipline is a free online five-in-a-row card board game, in the style of Sequence, for 2 to 12 players. Play in the browser with friends on different phones, against computer players, or pass-and-play on one device. No download or sign-up.", "genre": ["Board game", "Card game", "Strategy"], "gamePlatform": "Web browser", "applicationCategory": "GameApplication", "operatingSystem": "Any (web browser)", "playMode": ["MultiPlayer", "SinglePlayer"], "numberOfPlayers": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 12}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "isAccessibleForFree": true, "inLanguage": "en"}, {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is Chipline free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Chipline is completely free to play in your web browser, with no download and no sign-up."}}, {"@type": "Question", "name": "How many players can play?", "acceptedAnswer": {"@type": "Answer", "text": "From 2 to 12 players: 2, 3, 4, 6, 8, 9, 10 or 12. Bigger groups split into 2 or 3 teams that take turns in order."}}, {"@type": "Question", "name": "Can I play with friends on different phones?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tap Play with friends, start a new room and send the invite link on WhatsApp. Each friend opens the link on their own phone, types a name and joins."}}, {"@type": "Question", "name": "Can I play against the computer?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Tap Play the computer for a one-tap game, or add computer players to any seat in an online room or a pass-and-play game."}}, {"@type": "Question", "name": "How do you win?", "acceptedAnswer": {"@type": "Answer", "text": "Two teams need two lines of five chips. Three teams need one line. Lines can run across, down or diagonally, and the four star corners count for every team."}}, {"@type": "Question", "name": "What do the jacks do?", "acceptedAnswer": {"@type": "Answer", "text": "Two-eyed jacks (diamonds and clubs) are wild: place a chip on any open space. One-eyed jacks (spades and hearts) remove one opponent chip that is not part of a finished line."}}]}]</script>
 <script>
 /* Google Analytics: only on the live site, never on test copies. */
@@ -151,11 +162,98 @@
   --dim:rgba(7,50,48,.55);
   --t0:#ff2e7e; --t0d:#b3004a; --t1:#ff9f00; --t1d:#b36b00; --t2:#3d5afe; --t2d:#1a2fb0;
 }
+:root[data-skin="galaxy"]{
+  color-scheme: dark;
+  --card-bg:linear-gradient(160deg,#fbf7ee,#ece4d2); --card-ink:#151a24; --card-red:#c8283a; --card-edge:rgba(255,255,255,.6); --tag-ink:#fbf7ee;
+  --body:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif; --tilt:13deg;
+  --bg-col:#05041a; --bg-img:radial-gradient(70% 55% at 20% 10%,rgba(140,60,255,.35),transparent 70%),radial-gradient(60% 50% at 85% 25%,rgba(0,190,255,.25),transparent 70%),radial-gradient(80% 60% at 60% 100%,rgba(255,60,170,.22),transparent 70%); --bg-size:auto; --noise:.08;
+  --ink:#eef0ff; --muted:#a9acd6; --focus:#9be7ff;
+  --panel:linear-gradient(180deg,rgba(24,20,62,.82),rgba(10,8,32,.88)); --panel-bd:#4a3fa8; --panel-sh:rgba(0,0,0,.55);
+  --inset:rgba(6,4,22,.7); --track:rgba(255,255,255,.14); --btn:linear-gradient(180deg,#2a2468,#16123e);
+  --accent:#9be7ff; --accent-hi:#e6f9ff; --accent-lo:#3fa9d6; --accent-ink:#06122a; --accent-rgb:155,231,255;
+  --title-fill:linear-gradient(90deg,#c39bff,#9be7ff 50%,#ff8fd8);
+  --frame:linear-gradient(145deg,#3b2a8f,#120c3a 60%,#2a1d6e);
+  --frame-sh:0 3cqw 8cqw rgba(0,0,0,.7),0 0 6cqw rgba(140,90,255,.55),0 0 12cqw rgba(0,190,255,.3),inset 0 0 0 1px rgba(255,255,255,.3);
+  --board-bg:radial-gradient(circle at 50% 40%,#1b1450,#070520); --board-edge:rgba(155,231,255,.6);
+  --card-bg:linear-gradient(160deg,rgba(40,34,100,.92),rgba(18,14,56,.95)); --card-ink:#e6ebff; --card-red:#ff8fc0; --card-edge:rgba(155,231,255,.35); --tag-ink:#06122a;
+  --free-bg:radial-gradient(circle at 35% 30%,#fff,#9be7ff 45%,#3fa9d6); --free-ink:#06122a;
+  --dim:rgba(3,2,14,.62);
+  --t0:#ff5cc8; --t0d:#a3187a; --t1:#38d4ff; --t1d:#0a78a6; --t2:#b3ff5c; --t2d:#5f9e14;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif; --display-w:700;
+}
+:root[data-skin="gold"]{
+  color-scheme: dark;
+  --card-bg:linear-gradient(160deg,#fbf7ee,#ece4d2); --card-ink:#151a24; --card-red:#c8283a; --card-edge:rgba(255,255,255,.6); --tag-ink:#fbf7ee;
+  --body:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif; --tilt:13deg;
+  --bg-col:#070605; --bg-img:radial-gradient(90% 60% at 50% 0%,rgba(212,160,60,.22),transparent 70%),radial-gradient(60% 40% at 50% 100%,rgba(140,20,40,.25),transparent 70%); --bg-size:auto; --noise:.12;
+  --ink:#f7ecd2; --muted:#bba987; --focus:#f4cf6b;
+  --panel:linear-gradient(180deg,rgba(28,22,14,.92),rgba(14,11,8,.94)); --panel-bd:#6e5321; --panel-sh:rgba(0,0,0,.6);
+  --inset:rgba(0,0,0,.55); --track:rgba(255,220,140,.14); --btn:linear-gradient(180deg,#2a2114,#140f09);
+  --accent:#f4cf6b; --accent-hi:#fff0b8; --accent-lo:#a8791d; --accent-ink:#1d1403; --accent-rgb:244,207,107;
+  --title-fill:linear-gradient(180deg,#fff3c4,#f4cf6b 45%,#a8791d);
+  --frame:linear-gradient(150deg,#fff3c4 0%,#d4a03c 16%,#7a5410 34%,#f6dc8f 52%,#a8791d 70%,#fff0b8 86%,#8a6214 100%);
+  --frame-sh:0 3cqw 8cqw rgba(0,0,0,.75),0 0 6cqw rgba(244,207,107,.3),inset 0 0 0 .25cqw rgba(255,255,255,.4),inset 0 -.4cqw .8cqw rgba(60,30,0,.45);
+  --board-bg:radial-gradient(120% 90% at 50% 20%,#24201b 0%,#100e0b 55%,#050403 100%); --board-edge:rgba(244,207,107,.55);
+  --free-bg:radial-gradient(circle at 35% 30%,#fff3c4,#f4cf6b 45%,#a8791d); --free-ink:#1d1403;
+  --dim:rgba(0,0,0,.62);
+  --t0:#d8243f; --t0d:#7c0d1f; --t1:#e9e6df; --t1d:#8f8a80; --t2:#1fa36a; --t2d:#0b5c3a;
+  --display:"Limelight","Copperplate","Georgia",serif; --display-w:400;
+}
+:root[data-skin="chand"]{
+  color-scheme: dark;
+  --card-bg:linear-gradient(160deg,#fbf7ee,#ece4d2); --card-ink:#151a24; --card-red:#c8283a; --card-edge:rgba(255,255,255,.6); --tag-ink:#fbf7ee;
+  --body:"Outfit",system-ui,-apple-system,"Segoe UI",sans-serif; --tilt:13deg;
+  --bg-col:#03122a; --bg-img:radial-gradient(90% 60% at 50% 0%,rgba(40,90,160,.45),transparent 70%),radial-gradient(70% 40% at 50% 100%,rgba(10,120,90,.35),transparent 70%); --bg-size:auto; --noise:.08;
+  --ink:#f3f7ef; --muted:#a8c2c0; --focus:#ffd76a;
+  --panel:linear-gradient(180deg,rgba(8,40,60,.88),rgba(4,24,40,.92)); --panel-bd:#1f6b5c; --panel-sh:rgba(0,0,0,.5);
+  --inset:rgba(2,16,28,.65); --track:rgba(255,255,255,.12); --btn:linear-gradient(180deg,#0e3d4e,#06263a);
+  --accent:#ffd76a; --accent-hi:#fff2bf; --accent-lo:#b88a1c; --accent-ink:#231800; --accent-rgb:255,215,106;
+  --title-fill:linear-gradient(180deg,#fff2bf,#ffd76a 55%,#b88a1c);
+  --frame:linear-gradient(150deg,#0f6e57 0%,#0a4a3b 30%,#14806a 50%,#073a2e 75%,#0f6e57 100%);
+  --frame-sh:0 3cqw 8cqw rgba(0,0,0,.6),0 0 6cqw rgba(255,215,106,.25),inset 0 0 0 .3cqw #ffd76a,inset 0 0 0 .55cqw #073a2e;
+  --board-bg:radial-gradient(120% 90% at 50% 18%,#0e3e5e 0%,#072a44 55%,#041a2e 100%); --board-edge:rgba(255,215,106,.45);
+  --free-bg:radial-gradient(circle at 35% 30%,#fff2bf,#ffd76a 45%,#b88a1c); --free-ink:#231800;
+  --dim:rgba(2,14,26,.6);
+  --t0:#ff6b5a; --t0d:#a82a1c; --t1:#4cc9f0; --t1d:#1676a0; --t2:#ffd76a; --t2d:#a07a12;
+  --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif; --display-w:700;
+}
+/* Ambient animated layer for Galaxy, Black Gold and Chand Raat */
+#amb{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;display:none}
+:root[data-skin="galaxy"] #amb,:root[data-skin="gold"] #amb,:root[data-skin="chand"] #amb{display:block}
+#amb i{position:absolute;inset:-50%;background-repeat:repeat}
+#amb .s1{background-image:radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 130px 80px,#fff,transparent),radial-gradient(1.5px 1.5px at 60px 160px,#cfe9ff,transparent),radial-gradient(1px 1px at 190px 140px,#fff,transparent),radial-gradient(2px 2px at 90px 210px,#fff,transparent);background-size:220px 240px;animation:drift 120s linear infinite,twinkle 4s ease-in-out infinite}
+#amb .s2{background-image:radial-gradient(1px 1px at 40px 60px,#fff,transparent),radial-gradient(1.5px 1.5px at 170px 20px,#ffe3f6,transparent),radial-gradient(1px 1px at 110px 190px,#fff,transparent);background-size:260px 230px;opacity:.7;animation:drift 200s linear infinite reverse,twinkle 6s ease-in-out 1.5s infinite}
+#amb .neb{inset:auto;width:70vmax;height:70vmax;left:-15vmax;top:-20vmax;border-radius:50%;background:radial-gradient(closest-side,rgba(150,80,255,.35),transparent);filter:blur(20px);animation:nebula 30s ease-in-out infinite alternate}
+#amb .neb.b{left:auto;right:-20vmax;top:auto;bottom:-25vmax;background:radial-gradient(closest-side,rgba(0,190,255,.28),transparent);animation-duration:38s}
+@keyframes drift{to{transform:translate(220px,240px)}}
+@keyframes twinkle{50%{opacity:.35}}
+@keyframes nebula{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+#amb .moon,#amb .lan{display:none}
+:root[data-skin="chand"] #amb .moon{display:block;position:absolute;top:16vh;left:3vw;width:100px;height:100px;border-radius:50%;box-shadow:inset -26px 10px 0 0 #fff4c4;filter:drop-shadow(0 0 22px rgba(255,230,150,.75));animation:moon 8s ease-in-out infinite}
+@keyframes moon{50%{filter:drop-shadow(0 0 36px rgba(255,230,150,.95))}}
+:root[data-skin="chand"] #amb .lan{display:block;position:absolute;top:0;width:2px;height:var(--h);left:var(--x);background:linear-gradient(#b88a1c,#ffd76a);transform-origin:top center;animation:sway 5s ease-in-out var(--d) infinite}
+:root[data-skin="chand"] #amb .lan::after{content:"";position:absolute;left:50%;bottom:-38px;width:26px;height:38px;transform:translateX(-50%);border-radius:7px 7px 12px 12px;background:radial-gradient(circle at 50% 55%,#fff6c9 0 18%,#ffb32e 45%,#b8461c 100%);box-shadow:0 0 18px 6px rgba(255,180,60,.55),inset 0 0 0 2px rgba(120,50,10,.6)}
+@keyframes sway{50%{transform:rotate(6deg)}}
+@media (max-width:760px){:root[data-skin="chand"] #amb .moon{top:14.5vh;bottom:auto;left:auto;right:8vw;width:54px;height:54px;box-shadow:inset -14px 6px 0 0 #fff4c4}
+  :root[data-skin="chand"] #amb .lan{top:auto;bottom:26vh;height:0}
+  :root[data-skin="chand"] #amb .lan::after{bottom:0;width:18px;height:26px}
+  :root[data-skin="chand"] #amb .lan:nth-of-type(1){left:10%}:root[data-skin="chand"] #amb .lan:nth-of-type(2){left:36%}:root[data-skin="chand"] #amb .lan:nth-of-type(3){left:64%}:root[data-skin="chand"] #amb .lan:nth-of-type(4){left:90%}}
+:root[data-skin="gold"] #amb .s1{background-image:radial-gradient(1.5px 1.5px at 20px 30px,#ffe7a3,transparent),radial-gradient(1px 1px at 130px 80px,#f4cf6b,transparent),radial-gradient(2px 2px at 60px 160px,#fff0b8,transparent),radial-gradient(1px 1px at 190px 140px,#d4a03c,transparent);animation:rise 40s linear infinite,twinkle 3s ease-in-out infinite}
+:root[data-skin="gold"] #amb .s2{background-image:radial-gradient(1.5px 1.5px at 40px 60px,#ffe7a3,transparent),radial-gradient(1px 1px at 170px 20px,#f4cf6b,transparent);animation:rise 70s linear infinite,twinkle 5s ease-in-out 1s infinite}
+:root[data-skin="gold"] #amb .neb{background:radial-gradient(closest-side,rgba(212,160,60,.22),transparent)}
+:root[data-skin="gold"] #amb .neb.b{background:radial-gradient(closest-side,rgba(160,20,45,.25),transparent)}
+:root[data-skin="chand"] #amb .neb{background:radial-gradient(closest-side,rgba(60,120,200,.3),transparent)}
+:root[data-skin="chand"] #amb .neb.b{background:radial-gradient(closest-side,rgba(20,160,120,.25),transparent)}
+@keyframes rise{to{transform:translateY(-240px)}}
+:root[data-skin="galaxy"] .chip{box-shadow:0 0 .5em color-mix(in srgb,var(--c) 70%,transparent),0 .07em 0 var(--cd),0 .3em .4em rgba(0,0,0,.6),inset 0 -.1em .16em rgba(0,0,0,.3),inset 0 .08em .1em rgba(255,255,255,.5)}
+:root[data-skin="galaxy"] .cell .s,:root[data-skin="galaxy"] .cell{text-shadow:0 0 .4em rgba(155,231,255,.35)}
+:root[data-skin="gold"] .chip{box-shadow:0 0 0 .06em #f4cf6b,0 .07em 0 var(--cd),0 .14em 0 #000,0 .32em .4em rgba(0,0,0,.7),inset 0 .08em .1em rgba(255,255,255,.45)}
+@media (prefers-reduced-motion:reduce){#amb i,#amb .moon,#amb .lan{animation:none!important}}
 .t0{--c:var(--t0);--cd:var(--t0d)}.t1{--c:var(--t1);--cd:var(--t1d)}.t2{--c:var(--t2);--cd:var(--t2d)}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 body{background:var(--bg-col);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;overflow-x:hidden}
-body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--bg-img) var(--bg-col);background-size:var(--bg-size)}
+body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:var(--bg-img) var(--bg-col);background-size:var(--bg-size)}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:var(--noise);mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
@@ -189,6 +287,9 @@ h1,h2,h3{font-family:var(--display);font-weight:var(--display-w);margin:0;text-w
 .sw.royal{background:linear-gradient(135deg,#1d4f7a 50%,#e9c46a 50%)}
 .sw.classic{background:linear-gradient(135deg,#1d6b43 50%,#7a4a26 50%)}
 .sw.bazaar{background:conic-gradient(#ff2e7e,#ffd400,#00b8a9,#ff2e7e)}
+.sw.galaxy{background:radial-gradient(circle at 30% 30%,#fff 0 8%,transparent 10%),linear-gradient(135deg,#7a3cff,#05041a 60%,#38d4ff)}
+.sw.gold{background:linear-gradient(135deg,#0a0806 50%,#f4cf6b 50%)}
+.sw.chand{background:radial-gradient(circle at 62% 38%,#03122a 0 26%,transparent 28%),radial-gradient(circle at 50% 45%,#ffd76a 0 36%,#03122a 38%)}
 .skins button:not([aria-pressed="true"]) .tx{display:none}
 .skins button{padding:5px 8px}
 
@@ -521,14 +622,15 @@ body:has(.modal.winner) #fx{z-index:9}
   .m-last{flex:1;min-width:0}
   .m-last b{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;font-weight:600}
   .boardcol{flex:1;min-height:0;gap:8px}
-  .boardbox{flex:1 1 0;min-height:min(92vw,330px);max-width:none;min-width:0;container-type:size;display:grid;place-items:center}
+  .boardbox{flex:0 0 auto;height:min(calc(100vw - 16px),calc(100dvh - 330px));min-height:min(92vw,300px);max-width:none;min-width:0;container-type:size;display:grid;place-items:center}
   .boardfit{width:min(100cqw,100cqh)}
   .frame{padding:1.4cqw;border-radius:2.4cqw}
-  .tray{flex:none;min-height:158px;padding:10px 10px 12px;gap:8px;border-radius:16px;justify-content:center}
+  .tray{flex:1 1 auto;min-height:158px;padding:10px 10px 12px;gap:8px;border-radius:16px;justify-content:center}
   .hint{font-size:.95rem}
   .hint small{font-size:.82rem}
-  .hand{--cw:min(16vw,9.2vh,74px);padding:30px 0 2px}
-  .hc{margin-left:calc(var(--cw)*-.24)}
+  .hand{--cw:min(19.5vw,12.5dvh,88px);padding:30px 0 2px}
+  .hc{margin-left:calc(var(--cw)*-.28)}
+
   .reveal{gap:10px 12px}
   .reveal .big{width:46px;height:46px;font-size:17px}
   .reveal .txt{min-width:0}
@@ -546,6 +648,7 @@ body:has(.modal.winner) #fx{z-index:9}
 </style>
 </head>
 <body>
+<div id="amb" aria-hidden="true"><i class="neb"></i><i class="neb b"></i><i class="s1"></i><i class="s2"></i><span class="moon"></span><span class="lan" style="--x:5%;--h:52vh;--d:0s"></span><span class="lan" style="--x:12%;--h:36vh;--d:-1.2s"></span><span class="lan" style="--x:97.5%;--h:62vh;--d:-2.4s"></span><span class="lan" style="--x:2%;--h:70vh;--d:-3.1s"></span></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <div id="flash" aria-hidden="true"></div>
 <div class="wrap">
@@ -560,6 +663,9 @@ body:has(.modal.winner) #fx{z-index:9}
         <button type="button" data-skin="royal" aria-label="Royal style" title="Royal"><span class="sw royal"></span><span class="tx">Royal</span></button>
         <button type="button" data-skin="classic" aria-label="Classic table style" title="Classic"><span class="sw classic"></span><span class="tx">Classic</span></button>
         <button type="button" data-skin="bazaar" aria-label="Bazaar style" title="Bazaar"><span class="sw bazaar"></span><span class="tx">Bazaar</span></button>
+        <button type="button" data-skin="galaxy" aria-label="Galaxy style" title="Galaxy"><span class="sw galaxy"></span><span class="tx">Galaxy</span></button>
+        <button type="button" data-skin="gold" aria-label="Black Gold style" title="Black Gold"><span class="sw gold"></span><span class="tx">Black Gold</span></button>
+        <button type="button" data-skin="chand" aria-label="Chand Raat style" title="Chand Raat"><span class="sw chand"></span><span class="tx">Chand Raat</span></button>
       </div>
       <button class="btn ghost" id="btnSound" type="button" aria-pressed="true">Sound on</button>
       <button class="btn ghost" id="btnRules" type="button">Rules</button>
@@ -1124,7 +1230,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
 <script>
 (function(){
   var E = Engine;
-  var SKINS = { neon:{teams:['Magenta','Cyan','Lime']}, room:{teams:['Coral','Cobalt','Violet']}, day:{teams:['Red','Blue','Green']}, royal:{teams:['Ruby','Sapphire','Emerald']}, classic:{teams:['Red','Blue','Green']}, bazaar:{teams:['Pink','Saffron','Indigo']} };
+  var SKINS = { neon:{teams:['Magenta','Cyan','Lime']}, room:{teams:['Coral','Cobalt','Violet']}, day:{teams:['Red','Blue','Green']}, royal:{teams:['Ruby','Sapphire','Emerald']}, classic:{teams:['Red','Blue','Green']}, bazaar:{teams:['Pink','Saffron','Indigo']}, galaxy:{teams:['Nova','Comet','Aurora']}, gold:{teams:['Ruby','Pearl','Jade']}, chand:{teams:['Henna','Moonlight','Lantern']} };
   var CLS = ['t0','t1','t2'], MARK = ['●','◆','▲'];
   var SUIT = {S:'♠',H:'♥',D:'♦',C:'♣'};
   var SAVE = 'chipline-save-v1', MUTE = 'chipline-mute', SKIN = 'chipline-skin';
