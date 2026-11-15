@@ -566,7 +566,9 @@ table.lb tr.me td{background:rgba(var(--accent-rgb),.16);font-weight:700}
       </ol>
       <p><a href="/rules/">Read the full rules of Sequence</a>: jacks, corners, dead cards and rules for 2, 3, 4 players and teams.</p>
       <p><a href="/play-with-friends/">How to play online with friends</a>: start a room, share the link on WhatsApp, and play on your own phones.</p>
+      <p><a href="/strategy/">Sequence strategy: 12 tips to win</a>: blocking, jacks, corners and team play.</p>
       <p><a href="/vs-computer/">Play against the computer</a>: one tap to start, plus tips to beat it.</p>
+      <p><a href="/faq/">Sequence FAQ</a>: quick answers on cards, jacks, corners and winning.</p>
       <p class="small"><a href="/privacy/">Privacy policy</a>: what we store, Google sign-in and the leaderboard.</p>
       <h3>Questions players ask</h3>
       <div class="faq"><div class="qa"><h3>Is Chipline free?</h3><p>Yes. Chipline is completely free to play in your web browser, with no download and no sign-up.</p></div><div class="qa"><h3>How many players can play?</h3><p>From 2 to 12 players: 2, 3, 4, 6, 8, 9, 10 or 12. Bigger groups split into 2 or 3 teams that take turns in order.</p></div><div class="qa"><h3>Can I play with friends on different phones?</h3><p>Yes. Tap Play with friends, start a new room and send the invite link on WhatsApp. Each friend opens the link on their own phone, types a name and joins.</p></div><div class="qa"><h3>Can I play against the computer?</h3><p>Yes. Tap Play the computer for a one-tap game, or add computer players to any seat in an online room or a pass-and-play game.</p></div><div class="qa"><h3>How do you win?</h3><p>Two teams need two lines of five chips. Three teams need one line. Lines can run across, down or diagonally, and the four star corners count for every team.</p></div><div class="qa"><h3>What do the jacks do?</h3><p>Two-eyed jacks (diamonds and clubs) are wild: place a chip on any open space. One-eyed jacks (spades and hearts) remove one opponent chip that is not part of a finished line.</p></div></div>
@@ -1728,12 +1730,13 @@ if (typeof module !== 'undefined') module.exports = Bot;
   document.addEventListener('pointerdown', function(ev){ if(!ev.target.closest('#reactWrap')) reactPick(false); });
 
   /* ---------- Google sign-in and leaderboard ---------- */
+  var GOOGLE_ON = false;   // flip to true once the Google client secret is saved in Supabase
   var acct = { signed: false };
   function paintAcct(){
     var box = $('acctBox'); if(!box) return;
     if(!Net || !Net.account){ box.classList.add('hidden'); return; }
     box.classList.remove('hidden');
-    $('acctSignIn').classList.toggle('hidden', acct.signed);
+    $('acctSignIn').classList.toggle('hidden', acct.signed || !GOOGLE_ON);
     $('acctWho').classList.toggle('hidden', !acct.signed);
     if(acct.signed) $('acctName').textContent = acct.first;
   }
@@ -1755,6 +1758,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     try{ history.replaceState(null, '', location.pathname + (codeFromUrl() ? '?room=' + codeFromUrl() : '')); }catch(e){}
   }
   async function startGoogle(){
+    if(!GOOGLE_ON) return;
     if(on){ toast('Finish or leave the room first, then sign in.'); return; }
     var framed = false; try{ framed = window.top !== window.self; }catch(e){ framed = true; }
     if(framed){ window.open('https://playsequenceonline.github.io/', '_blank', 'noopener'); toast('Google sign-in opens on the Chipline website.'); return; }
@@ -1774,8 +1778,9 @@ if (typeof module !== 'undefined') module.exports = Bot;
     var inTop = d.top.some(function(r){ return acct.signed && r.user_id === acct.id; });
     var rows = d.top.map(function(r, i){ return rowHtml(r, i, acct.signed ? acct.id : null); }).join('');
     var body = d.top.length ? '<div class="lbwrap"><table class="lb"><thead><tr><th>#</th><th>Player</th><th>Wins</th><th>Games</th><th>Win %</th></tr></thead><tbody>'+rows+'</tbody></table></div>'
-      : '<p class="lede" style="margin:0">No wins yet. Be the first: sign in, start a room and beat a friend.</p>';
-    var you = !acct.signed ? '<p class="lbnote">You are playing as a guest. <button class="linkish inl" data-m="google" type="button">Sign in with Google</button> to get on the board.</p>'
+      : '<p class="lede" style="margin:0">No wins yet.</p>';
+    var you = (!acct.signed && !GOOGLE_ON) ? '<p class="lbnote">Sign-in with Google is coming soon. Once it is on, your online wins will count here.</p>'
+      : !acct.signed ? '<p class="lbnote">You are playing as a guest. <button class="linkish inl" data-m="google" type="button">Sign in with Google</button> to get on the board.</p>'
       : (d.mine && !inTop) ? '<p class="lbnote">You: '+d.mine.wins+' wins from '+d.mine.games+' games.</p>'
       : !d.mine ? '<p class="lbnote">Signed in as '+esc(acct.first)+'. Your first online game with a friend puts you on the board.</p>' : '';
     openModal('<h2>Leaderboard</h2><p class="lede" style="margin:0">Wins in online games with at least two real people. Games against only the computer do not count.</p>'+body+you+'<div class="row"><button class="btn primary" data-m="close" type="button">Close</button></div>');
@@ -1785,6 +1790,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     if(!on || !on.view || !Net || !Net.account) return '';
     var people = on.view.players.filter(function(p){ return !p.bot; }).length;
     if(people < 2) return '<p class="lbnote">Games against only the computer do not count on the leaderboard.</p>';
+    if(!acct.signed && !GOOGLE_ON) return '';
     return acct.signed ? '<p class="lbnote">This game counts on the leaderboard. <button class="linkish inl" data-m="board" type="button">See leaderboard</button></p>'
       : '<p class="lbnote">Sign in with Google on the home screen to count your wins. <button class="linkish inl" data-m="board" type="button">See leaderboard</button></p>';
   }
