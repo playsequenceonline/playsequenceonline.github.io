@@ -520,11 +520,6 @@ table.lb tr.me td{background:rgba(var(--accent-rgb),.16);font-weight:700}
 .turnban b{font-family:var(--display);font-weight:var(--display-w);font-size:clamp(1.5rem,8cqw,2.8rem);line-height:1;text-shadow:0 2px 6px rgba(0,0,0,.5)}
 .turnban i{font-style:normal;font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.8rem;opacity:.92}
 @keyframes banner{0%{opacity:0;transform:translateX(-70%) skewX(-18deg)}18%{opacity:1;transform:translateX(0) skewX(-6deg)}26%{transform:skewX(0)}74%{opacity:1;transform:none}100%{opacity:0;transform:translateX(70%) skewX(-18deg)}}
-/* Picture cards (J, Q, K) */
-.hc.face .pip{padding:13% 9% 5% 21%;place-items:stretch}
-.hc.face .pip svg{width:100%;height:100%;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))}
-.hc.face{background:linear-gradient(160deg,color-mix(in srgb,var(--card-bg) 88%,#ffd36a),var(--card-bg) 60%)}
-.cell.face{background:linear-gradient(160deg,color-mix(in srgb,var(--card-bg) 80%,#ffcf5a),var(--card-bg) 70%)}
 /* Turn change: team-coloured light wipe over the board + hand sweeping in */
 .turnsweep{justify-self:stretch;align-self:stretch;border-radius:3cqw;background:linear-gradient(105deg,transparent 30%,color-mix(in srgb,var(--c) 55%,transparent) 45%,rgba(255,255,255,.55) 50%,color-mix(in srgb,var(--c) 55%,transparent) 55%,transparent 70%);background-size:300% 100%;mix-blend-mode:screen;animation:tsweep 1.1s cubic-bezier(.4,0,.2,1) both}
 @keyframes tsweep{from{background-position:100% 0;opacity:.2}30%{opacity:1}to{background-position:0 0;opacity:0}}
@@ -639,7 +634,7 @@ body:has(.modal.winner) #fx{z-index:9}
   .tray{flex:1 1 auto;min-height:158px;padding:10px 10px 12px;gap:8px;border-radius:16px;justify-content:center}
   .hint{font-size:.95rem}
   .hint small{font-size:.82rem}
-  .hand{--cw:min(19.5vw,12.5dvh,88px);padding:30px 0 2px}
+  .hand{--cw:min(16.5vw,12.5dvh,88px);padding:30px 0 2px}
   .hc{margin-left:calc(var(--cw)*-.28)}
 
   .reveal{gap:10px 12px}
@@ -1504,7 +1499,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
     for(var i=0;i<100;i++){
       var c = L[i], cls='cell', inner, aria, extra='';
       if(c==='FREE'){ cls+=' free'; inner='★'; aria='Free corner'; }
-      else { if(isRed(c)) cls+=' red'; if(/^[QK]$/.test(rank(c))) cls+=' face'; inner=rank(c)+'<span class="s">'+SUIT[suit(c)]+'</span>'; aria=label(c); }
+      else { if(isRed(c)) cls+=' red'; inner=rank(c)+'<span class="s">'+SUIT[suit(c)]+'</span>'; aria=label(c); }
       var isT = targets.indexOf(i)>=0;
       if(isT) cls+=' target'+(rm?' rm':'')+(pend===i?' pick':'');
       else if(card) cls+=' dim';
@@ -1597,35 +1592,12 @@ if (typeof module !== 'undefined') module.exports = Bot;
     if(l.type==='remove') return n+' removed a '+tn(l.from)+' chip';
     return n+' discarded and passed';
   }
-  function faceSvg(r, sc, red){
-    var ink = red?'#b3202b':'#1d2433', robe = red?'#c8323c':'#2c4f9e', robe2 = red?'#f2c14e':'#e8b93a', skin='#f6d6b4', hair = r==='Q'?'#7a3b12':'#4a2c14';
-    var hat = r==='K'
-      ? '<path d="M13 11l2-8 4 5 6-7 6 7 4-5 2 8z" fill="#f2c230" stroke="#8a6410" stroke-width=".8"/><circle cx="25" cy="3" r="1.4" fill="#e23b4a"/><circle cx="15" cy="4" r="1" fill="#3b7be2"/><circle cx="35" cy="4" r="1" fill="#3b7be2"/>'
-      : r==='Q'
-      ? '<path d="M15 11c1-4 4-6 10-6s9 2 10 6z" fill="#f2c230" stroke="#8a6410" stroke-width=".8"/><path d="M19 7l2-4 2 3 2-4 2 4 2-3 2 4" fill="none" stroke="#f2c230" stroke-width="1.3"/><circle cx="25" cy="3" r="1.3" fill="#e23b4a"/>'
-      : '<path d="M14 11c0-5 5-8 11-8s9 3 10 8z" fill="'+robe+'" stroke="#000" stroke-opacity=".35" stroke-width=".6"/><path d="M33 6c4-4 9-3 10 0-4-1-6 0-9 3z" fill="'+robe2+'"/>';
-    var face = '<ellipse cx="25" cy="16" rx="6" ry="6.6" fill="'+skin+'" stroke="#000" stroke-opacity=".3" stroke-width=".5"/>'
-      +'<circle cx="22.8" cy="15.4" r=".8" fill="#222"/><circle cx="27.2" cy="15.4" r=".8" fill="#222"/><path d="M23.4 19c1 .8 2.2.8 3.2 0" stroke="#a24a3a" stroke-width=".7" fill="none" stroke-linecap="round"/>'
-      +(r==='K'?'<path d="M19.5 18c1 6 10 6 11 0-1 2-3 3-5.5 3s-4.5-1-5.5-3z" fill="'+hair+'"/>':'')
-      +(r==='Q'?'<path d="M18.6 13c-2 5-1 10 1 13l2-1c-1-3-1.5-7 0-11zM31.4 13c2 5 1 10-1 13l-2-1c1-3 1.5-7 0-11z" fill="'+hair+'"/>':'')
-      +(r==='J'?'<path d="M19 14c0-2 1-4 3-4h6c2 0 3 2 3 4-2-1-3-1.5-6-1.5S21 13 19 14z" fill="'+hair+'"/>':'');
-    var body = '<path d="M9 35c1-8 6-12 16-12s15 4 16 12z" fill="'+robe+'"/><path d="M21 23l4 12 4-12" fill="'+robe2+'"/><path d="M9 35c1-8 6-12 16-12s15 4 16 12" fill="none" stroke="'+robe2+'" stroke-width="1.4"/>'
-      +'<text x="25" y="33.6" text-anchor="middle" font-size="7" fill="#fff">'+sc+'</text>'
-      +(r==='K'?'<path d="M40 34V20" stroke="#8a6410" stroke-width="1.4"/><circle cx="40" cy="19" r="1.8" fill="#f2c230"/>':'')
-      +(r==='Q'?'<path d="M11 31l3-6" stroke="#2f8a3e" stroke-width="1"/><circle cx="14.5" cy="24.5" r="2" fill="#e85a8a"/>':'')
-      +(r==='J'?'<path d="M39 35L44 18" stroke="#9aa3ad" stroke-width="1.4"/><path d="M41 27h5" stroke="#8a6410" stroke-width="1.4"/>':'');
-    var half = '<g>'+body+hat+face+'</g>';
-    return '<svg viewBox="0 0 50 70" aria-hidden="true"><rect x="1" y="1" width="48" height="68" rx="3" fill="#fffaf0" stroke="'+ink+'" stroke-width="1.2"/>'
-      +'<clipPath id="fc'+r+sc.charCodeAt(0)+'"><rect x="2" y="2" width="46" height="33"/></clipPath>'
-      +'<g clip-path="url(#fc'+r+sc.charCodeAt(0)+')">'+half+'</g><g transform="rotate(180 25 35)"><g clip-path="url(#fc'+r+sc.charCodeAt(0)+')">'+half+'</g></g>'
-      +'<path d="M3 35h44" stroke="'+ink+'" stroke-width=".8" stroke-opacity=".6"/></svg>';
-  }
   function cardHtml(c, i, n){
     var s = state, dead = E.isDead(s,c), wild = E.isWild(c), rem = E.isRemover(c);
     var tag = wild?'Wild':rem?'Remove':dead?'Dead':'';
     var off = i-(n-1)/2, r = (off*3.2).toFixed(1), y = (off*off*1.6).toFixed(1);
-    return '<button type="button" class="hc'+(isRed(c)?' red':'')+(dead?' dead':'')+(wild?' wild':'')+(E.isJack(c)?' jack':'')+(/^[JQK]$/.test(rank(c))?' face':'')+'" style="--i:'+i+';--r:'+r+'deg;--y:'+y+'px" data-h="'+i+'" aria-pressed="'+(i===sel)+'" aria-label="'+label(c)+(tag?', '+tag:'')+'">'
-      +'<span class="ix">'+rank(c)+'<i>'+SUIT[suit(c)]+'</i></span><span class="pip">'+(/^[JQK]$/.test(rank(c))?faceSvg(rank(c),SUIT[suit(c)],isRed(c)):SUIT[suit(c)])+'</span>'+(tag?'<small>'+tag+'</small>':'')+'</button>';
+    return '<button type="button" class="hc'+(isRed(c)?' red':'')+(dead?' dead':'')+(wild?' wild':'')+(E.isJack(c)?' jack':'')+'" style="--i:'+i+';--r:'+r+'deg;--y:'+y+'px" data-h="'+i+'" aria-pressed="'+(i===sel)+'" aria-label="'+label(c)+(tag?', '+tag:'')+'">'
+      +'<span class="ix">'+rank(c)+'<i>'+SUIT[suit(c)]+'</i></span><span class="pip">'+(E.isJack(c)?'J':SUIT[suit(c)])+'</span>'+(tag?'<small>'+tag+'</small>':'')+'</button>';
   }
   function renderTray(){
     var s=state, cur=s.players[s.turn], hand = on ? on.hand : s.hands[s.turn], tray=$('tray');
