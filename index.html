@@ -217,7 +217,7 @@
   --t0:#ff6b5a; --t0d:#a82a1c; --t1:#4cc9f0; --t1d:#1676a0; --t2:#ffd76a; --t2d:#a07a12;
   --display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif; --display-w:700;
 }
-/* Ambient animated layer for Galaxy, Black Gold and Chand Raat */
+/* Ambient animated layer for Galaxy, Black Gold and Moonlight */
 #amb{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;display:none}
 :root[data-skin="galaxy"] #amb,:root[data-skin="gold"] #amb,:root[data-skin="chand"] #amb{display:block}
 #amb i{position:absolute;inset:-50%;background-repeat:repeat}
@@ -673,10 +673,10 @@ body:has(.modal.winner) #fx{z-index:9}
         <button type="button" data-skin="day" aria-label="Daylight style" title="Daylight"><span class="sw day"></span><span class="tx">Daylight</span></button>
         <button type="button" data-skin="royal" aria-label="Royal style" title="Royal"><span class="sw royal"></span><span class="tx">Royal</span></button>
         <button type="button" data-skin="classic" aria-label="Classic table style" title="Classic"><span class="sw classic"></span><span class="tx">Classic</span></button>
-        <button type="button" data-skin="bazaar" aria-label="Bazaar style" title="Bazaar"><span class="sw bazaar"></span><span class="tx">Bazaar</span></button>
+        <button type="button" data-skin="bazaar" aria-label="Sunset style" title="Sunset"><span class="sw bazaar"></span><span class="tx">Sunset</span></button>
         <button type="button" data-skin="galaxy" aria-label="Galaxy style" title="Galaxy"><span class="sw galaxy"></span><span class="tx">Galaxy</span></button>
         <button type="button" data-skin="gold" aria-label="Black Gold style" title="Black Gold"><span class="sw gold"></span><span class="tx">Black Gold</span></button>
-        <button type="button" data-skin="chand" aria-label="Chand Raat style" title="Chand Raat"><span class="sw chand"></span><span class="tx">Chand Raat</span></button>
+        <button type="button" data-skin="chand" aria-label="Moonlight style" title="Moonlight"><span class="sw chand"></span><span class="tx">Moonlight</span></button>
       </div>
       <button class="btn ghost" id="btnSound" type="button" aria-pressed="true">Sound on</button>
       <button class="btn ghost" id="btnRules" type="button">Rules</button>
@@ -1241,7 +1241,7 @@ if (typeof module !== 'undefined') module.exports = Bot;
 <script>
 (function(){
   var E = Engine;
-  var SKINS = { neon:{teams:['Magenta','Cyan','Lime']}, room:{teams:['Coral','Cobalt','Violet']}, day:{teams:['Red','Blue','Green']}, royal:{teams:['Ruby','Sapphire','Emerald']}, classic:{teams:['Red','Blue','Green']}, bazaar:{teams:['Pink','Saffron','Indigo']}, galaxy:{teams:['Nova','Comet','Aurora']}, gold:{teams:['Ruby','Pearl','Jade']}, chand:{teams:['Henna','Moonlight','Lantern']} };
+  var SKINS = { neon:{teams:['Magenta','Cyan','Lime']}, room:{teams:['Coral','Cobalt','Violet']}, day:{teams:['Red','Blue','Green']}, royal:{teams:['Ruby','Sapphire','Emerald']}, classic:{teams:['Red','Blue','Green']}, bazaar:{teams:['Pink','Saffron','Indigo']}, galaxy:{teams:['Nova','Comet','Aurora']}, gold:{teams:['Ruby','Pearl','Jade']}, chand:{teams:['Rose','Silver','Lantern']} };
   var CLS = ['t0','t1','t2'], MARK = ['●','◆','▲'];
   var SUIT = {S:'♠',H:'♥',D:'♦',C:'♣'};
   var SAVE = 'chipline-save-v1', MUTE = 'chipline-mute', SKIN = 'chipline-skin';
