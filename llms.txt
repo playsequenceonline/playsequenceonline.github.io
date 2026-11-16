@@ -19,4 +19,5 @@ Key facts:
 - [Sequence strategy tips](https://playsequenceonline.github.io/strategy/): 12 tips on blocking, jacks, corners, double threats and team play.
 - [Sequence FAQ](https://playsequenceonline.github.io/faq/): short answers on cards, players, jacks, corners, dead cards and winning.
 - [One-page rules sheet (PDF)](https://playsequenceonline.github.io/sequence-rules.pdf): printable summary of the rules.
+- [Sequence rules for 2 players](https://playsequenceonline.github.io/blog/sequence-rules-for-2-players/): how to play head-to-head with 7 cards each and two sequences to win, plus 2-player strategy.
 - [Blog](https://playsequenceonline.github.io/blog/): guides such as rules for 3 players, one-eyed vs two-eyed jacks, and playing with 6 to 12 players
