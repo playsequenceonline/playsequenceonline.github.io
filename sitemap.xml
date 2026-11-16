@@ -44,7 +44,7 @@
   </url>
   <url>
     <loc>https://playsequenceonline.github.io/blog/</loc>
-    <lastmod>2026-11-15</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -63,6 +63,12 @@
   <url>
     <loc>https://playsequenceonline.github.io/blog/sequence-for-big-groups/</loc>
     <lastmod>2026-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://playsequenceonline.github.io/blog/sequence-rules-for-2-players/</loc>
+    <lastmod>2026-11-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
