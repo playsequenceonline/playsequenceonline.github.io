@@ -44,7 +44,7 @@
   </url>
   <url>
     <loc>https://playsequenceonline.github.io/blog/</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -69,6 +69,12 @@
   <url>
     <loc>https://playsequenceonline.github.io/blog/sequence-rules-for-2-players/</loc>
     <lastmod>2026-11-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://playsequenceonline.github.io/blog/jokers-in-sequence-game/</loc>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
