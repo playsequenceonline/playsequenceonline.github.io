@@ -21,4 +21,5 @@ Key facts:
 - [One-page rules sheet (PDF)](https://playsequenceonline.github.io/sequence-rules.pdf): printable summary of the rules.
 - [Sequence rules for 2 players](https://playsequenceonline.github.io/blog/sequence-rules-for-2-players/): how to play head-to-head with 7 cards each and two sequences to win, plus 2-player strategy.
 - [Jokers in Sequence](https://playsequenceonline.github.io/blog/jokers-in-sequence-game/): jokers are not used in standard Sequence; why the box includes them, which jacks are wild instead, and optional house rules for jokers.
+- [Sequence rules for 4 players](https://playsequenceonline.github.io/blog/sequence-game-rules-4-players/): four players play as 2 teams of 2 with 6 cards each and need two sequences to win; seating, turns, jacks and team strategy.
 - [Blog](https://playsequenceonline.github.io/blog/): guides such as rules for 3 players, one-eyed vs two-eyed jacks, and playing with 6 to 12 players
