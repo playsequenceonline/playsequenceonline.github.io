@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sequence Dead Card Rules: What to Do With a Dead Card</title>
+<meta name="description" content="A dead card in Sequence has both board spaces covered. Learn how to swap it on your turn, the one-per-turn limit, edge cases, and smart dead card strategy.">
+<link rel="canonical" href="https://playsequenceonline.github.io/blog/sequence-dead-card-rules/">
+<meta property="og:title" content="Sequence Dead Card Rules: What to Do With a Dead Card">
+<meta property="og:description" content="Both spaces covered? That card is dead. How to swap it, the one-per-turn limit, tricky edge cases and how to use dead cards to your advantage.">
+<meta property="og:url" content="https://playsequenceonline.github.io/blog/sequence-dead-card-rules/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://playsequenceonline.github.io/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sequence Dead Card Rules: What to Do With a Dead Card">
+<meta name="twitter:description" content="Both spaces covered? That card is dead. How to swap it, the one-per-turn limit, tricky edge cases and how to use dead cards to your advantage.">
+<meta name="twitter:image" content="https://playsequenceonline.github.io/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[
+ {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+   {
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Chipline",
+    "item": "https://playsequenceonline.github.io/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 2,
+    "name": "Blog",
+    "item": "https://playsequenceonline.github.io/blog/"
+   },
+   {
+    "@type": "ListItem",
+    "position": 3,
+    "name": "Sequence dead card rules",
+    "item": "https://playsequenceonline.github.io/blog/sequence-dead-card-rules/"
+   }
+  ]
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Sequence dead card rules: what to do with a dead card",
+  "description": "A dead card in Sequence has both board spaces covered. Learn how to swap it on your turn, the one-per-turn limit, edge cases, and smart dead card strategy.",
+  "url": "https://playsequenceonline.github.io/blog/sequence-dead-card-rules/",
+  "mainEntityOfPage": {
+   "@type": "WebPage",
+   "@id": "https://playsequenceonline.github.io/blog/sequence-dead-card-rules/"
+  },
+  "image": "https://playsequenceonline.github.io/og.jpg",
+  "datePublished": "2026-11-20",
+  "dateModified": "2026-11-20",
+  "author": {
+   "@type": "Organization",
+   "name": "Chipline",
+   "url": "https://playsequenceonline.github.io/"
+  },
+  "publisher": {
+   "@type": "Organization",
+   "name": "Chipline",
+   "url": "https://playsequenceonline.github.io/"
+  },
+  "inLanguage": "en"
+ },
+ {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+   {
+    "@type": "Question",
+    "name": "What is a dead card in Sequence?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "A dead card is a non-jack card whose two matching spaces on the board are both already covered by chips. Because there is nowhere left to play it, the rules let you trade it in for a new card."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Can you trade in more than one dead card per turn?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "No. You can turn in one dead card per turn. If you hold two dead cards, swap one now and the other on your next turn."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Is a card dead if only one of its spaces is covered?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "No. A card is only dead when both of its spaces are covered. If one space is still open, you must play it there or keep it."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Do you have to swap a dead card?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "No. Swapping is optional. You may keep a dead card, but it usually just takes up a slot in your hand, so most players swap it as soon as they can."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Can a jack ever be a dead card?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "No. Jacks have no spaces of their own on the board. A two-eyed jack can go on any open space and a one-eyed jack removes an opponent chip, so a jack always has a use."
+    }
+   },
+   {
+    "@type": "Question",
+    "name": "Can a dead card come back to life?",
+    "acceptedAnswer": {
+     "@type": "Answer",
+     "text": "Yes. If a one-eyed jack removes a chip from one of that card's spaces, the space opens up again and the card becomes playable. A space inside a completed sequence can never reopen, because completed sequences are locked."
+    }
+   }
+  ]
+ }
+]
+</script>
+<script>
+(function(){
+  if(location.hostname !== 'playsequenceonline.github.io') return;
+  var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZRBNPF2GD4';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag('js', new Date()); gtag('config', 'G-ZRBNPF2GD4');
+})();
+</script>
+<style>
+:root{--bg:#e6ebf1;--panel:#ffffff;--bd:#d3dae4;--ink:#141b26;--muted:#566273;--accent:#ffb400;--accent-ink:#231800;--link:#9a5b00;--red:#e5484d;--blue:#2f6fed;--green:#12a26d}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(90% 60% at 50% 0%,#ffffff,rgba(255,255,255,0) 70%),var(--bg);color:var(--ink);font:17px/1.65 Outfit,system-ui,sans-serif}
+a{color:var(--link)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 18px 60px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0 18px}
+.brand{font-family:"Bricolage Grotesque",Outfit,sans-serif;font-weight:700;font-size:1.5rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:8px}
+.brand i{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--red);box-shadow:inset 0 0 0 3px rgba(255,255,255,.75),0 1px 2px rgba(0,0,0,.3)}
+.brand i+i{background:var(--blue)}
+.brand i+i+i{background:var(--green)}
+.btn{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:700;text-decoration:none;background:linear-gradient(180deg,#ffd766,var(--accent) 55%,#c48600 140%);color:var(--accent-ink);box-shadow:0 6px 18px rgba(255,180,0,.32)}
+.btn.small{padding:8px 16px;font-size:.95rem}
+.crumbs{font-size:.9rem;color:var(--muted);margin-bottom:6px}
+.crumbs a{color:var(--muted)}
+h1{font-family:"Bricolage Grotesque",Outfit,sans-serif;font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.15;margin:.2em 0 .4em;color:var(--ink)}
+h2{font-family:"Bricolage Grotesque",Outfit,sans-serif;font-size:1.55rem;line-height:1.25;margin:2.2em 0 .5em}
+h3{font-size:1.15rem;margin:1.6em 0 .3em}
+p{margin:.6em 0}
+.lead{font-size:1.12rem;color:#1f2a3a}
+.panel{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:18px 20px;margin:18px 0;box-shadow:0 10px 30px rgba(30,45,70,.08)}
+.answer{border-left:4px solid var(--accent);padding:4px 0 4px 14px;margin:.6em 0 1em}
+table{width:100%;border-collapse:collapse;font-size:.98rem;background:var(--panel);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps li{counter-increment:s;position:relative;padding:4px 0 12px 48px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--accent);color:var(--accent-ink)}
+.toc{columns:2;column-gap:28px;padding-left:18px;margin:.4em 0}
+.toc li{margin:2px 0}
+figure{margin:16px 0;text-align:center}
+figure svg{max-width:100%;height:auto}
+figcaption{font-size:.92rem;color:var(--muted);margin-top:6px}
+.cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#fff4d1,#e7f0ff);border:1px solid var(--bd);border-radius:18px;padding:18px 20px;margin:26px 0}
+.cta p{margin:0;font-weight:600}
+.faq h3{margin-top:1.2em}
+footer{margin-top:40px;font-size:.9rem;color:var(--muted);border-top:1px solid var(--bd);padding-top:16px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.flow div{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:14px;text-align:center;font-size:.95rem}.flow b{display:block;font-family:"Bricolage Grotesque",Outfit,sans-serif;font-size:1.05rem}.flow .ph{font-size:2rem;line-height:1.2}@media (max-width:600px){.flow{grid-template-columns:1fr}}
+.print{background:#fff;border:1px solid var(--bd);color:var(--ink);border-radius:999px;padding:8px 16px;font:inherit;font-size:.95rem;cursor:pointer}
+@media (max-width:600px){.toc{columns:1}body{font-size:16px}th,td{padding:8px 6px}}
+@media print{
+  body{background:#fff;color:#000;font-size:12pt}
+  a{color:#000}
+  .panel,.cta{border:1px solid #999;background:#fff;box-shadow:none}
+  header.top .btn,.cta,.print,.no-print{display:none}
+  th{color:#333}
+  ol.steps li::before{background:#000;color:#fff}
+  figcaption{color:#333}
+}
+</style>
+<style>
+.posts{list-style:none;padding:0;margin:18px 0;display:grid;gap:14px}
+.posts li{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:16px 20px;box-shadow:0 10px 30px rgba(30,45,70,.06)}
+.posts h2,.posts h3{margin:0 0 .3em;font-size:1.25rem}
+.posts h2 a,.posts h3 a{color:var(--ink);text-decoration:none}
+.posts h2 a:hover,.posts h3 a:hover{text-decoration:underline}
+.meta{font-size:.9rem;color:var(--muted);margin:0 0 .8em}
+.tip{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:12px 18px;margin:14px 0}
+.tip h3{margin:.3em 0 .2em}
+.related{margin-top:28px}
+</style>
+<style>.takeaways h2{margin-top:.2em}.takeaways ul{margin:.3em 0;padding-left:20px}</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="/" aria-label="Chipline home"><span aria-hidden="true"><i></i><i></i><i></i></span>Chipline</a>
+  <a class="btn small" href="/">Play free</a>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Chipline</a> › <a href="/blog/">Blog</a> › Sequence dead card rules</nav>
+<main>
+<article>
+<h1>Sequence dead card rules: what to do with a dead card</h1>
+<p class="meta">Published 20 November 2026 · Chipline</p>
+<p class="lead answer">A dead card in Sequence is a card whose two matching spaces on the board are both already covered. On your turn, put it on the discard pile, say that you are turning in a dead card, draw a replacement, and then take your normal turn. You may swap only one dead card per turn.</p>
+
+<div class="panel takeaways">
+<h2>Key takeaways</h2>
+<ul>
+  <li>A card is dead only when <strong>both</strong> of its board spaces are covered, by any colour.</li>
+  <li>Swap it at the start of your turn: discard, announce it, draw, then play as normal.</li>
+  <li>The limit is <strong>one dead card per turn</strong>, and the swap is optional.</li>
+  <li>Jacks are never dead, because they have no spaces of their own.</li>
+  <li>A one-eyed jack can bring a dead card back to life by reopening one of its spaces.</li>
+</ul>
+</div>
+
+<h2>What counts as a dead card in Sequence?</h2>
+<p>The Sequence board is a 10x10 grid. The four corners are free spaces, and every card in the deck except the jacks appears <strong>twice</strong> on the remaining 96 spaces. So every ordinary card in your hand has exactly two places it can go.</p>
+<p>Once chips cover both of those places, the card can never be played as a normal card. That is a dead card. It does not matter whose chips they are: two of your own chips, two of your opponent's, or one of each all make the card dead.</p>
+<p>If you want to see how the two copies of each card are spread across the board, our guide to the <a href="/blog/sequence-game-board-layout/">Sequence game board layout</a> walks through it.</p>
+
+<h3>Is this card dead? Quick check</h3>
+<table>
+  <tr><th scope="col">Situation</th><th scope="col">Dead?</th><th scope="col">What you can do</th></tr>
+  <tr><td>Both spaces for the card are covered</td><td><strong>Yes</strong></td><td>Swap it on your turn</td></tr>
+  <tr><td>One space is covered, one is open</td><td>No</td><td>Play it on the open space, or hold it</td></tr>
+  <tr><td>Both spaces covered by your own chips</td><td><strong>Yes</strong></td><td>Swap it; colour does not matter</td></tr>
+  <tr><td>The card is a two-eyed or one-eyed jack</td><td>No</td><td>Jacks never go dead</td></tr>
+  <tr><td>A one-eyed jack just removed a chip from one of its spaces</td><td>No (again)</td><td>It is playable on the reopened space</td></tr>
+  <tr><td>Both spaces sit inside completed sequences</td><td><strong>Yes, for good</strong></td><td>Swap it; those chips can never be removed</td></tr>
+</table>
+
+<h2>How do you swap a dead card?</h2>
+<p>The swap happens on your own turn, before you play. Here is the order to follow:</p>
+<ol class="steps">
+  <li><strong>Check your hand at the start of your turn.</strong> Look for any card whose two spaces are both covered.</li>
+  <li><strong>Discard it face up and announce it.</strong> Place the dead card on the discard pile and say that you are turning in a dead card, so everyone can see both spaces really are taken.</li>
+  <li><strong>Draw one replacement card</strong> from the draw pile.</li>
+  <li><strong>Take your normal turn.</strong> Play a card from your hand, place your chip, and then draw as usual at the end of the turn.</li>
+</ol>
+<p>The swap does not use up your turn. You still play a card and place a chip afterwards, so a dead card costs you nothing as long as you remember to trade it in.</p>
+
+<h2>How many dead cards can you trade in per turn?</h2>
+<p>Just one. If two cards in your hand die at the same time, turn in one this turn and the other on your next turn. This limit keeps players from churning through the deck to fish for jacks.</p>
+
+<h2>Do you have to swap a dead card?</h2>
+<p>No, the swap is optional. That said, a dead card is a wasted slot in your hand: it can never be played, and holding it only shrinks your real choices. In almost every case you should swap it the first turn you can.</p>
+<p>The one reason to wait is if you think a one-eyed jack is about to open one of its spaces again. That is rare, and since you can swap on any later turn, there is little to gain by holding on.</p>
+
+<h2>Tricky dead card situations</h2>
+
+<h3>What if you forget to swap and play a different card?</h3>
+<p>The swap belongs at the start of your turn. If you have already played your card for the turn, the moment has passed, and you can turn in the dead card on your next turn instead. Nothing is lost except a little time.</p>
+
+<h3>What if you forget to draw after your turn?</h3>
+<p>This is a separate rule, often called "loss of card". In the boxed game, if you forget to draw at the end of your turn and the next player has already played, you lose the right to that card and play on with a smaller hand. It is a good reason to always swap and draw before you look away from the board.</p>
+
+<h3>What if every card in your hand is dead?</h3>
+<p>This is rare, but it can happen late in a long game. You can still only swap one card per turn, and the new card may be playable. If it is not, many tables agree on a simple house rule before the game, such as allowing extra swaps until you have a playable card. Agree on it at the start so nobody argues mid-game.</p>
+
+<h3>Can a dead card come back to life?</h3>
+<p>Yes. A one-eyed jack removes an opponent's chip from the board. If that chip was on one of your dead card's spaces, the space is open again and the card is live. The exception is a chip that is part of a completed sequence: those are locked, so a card whose spaces are both inside finished sequences is dead for the rest of the game. For more on how the two kinds of jack work, read <a href="/blog/one-eyed-vs-two-eyed-jacks/">one-eyed vs two-eyed jacks</a>.</p>
+
+<h2>How can dead cards help your strategy?</h2>
+<p>Dead cards are not just a rule to remember. Paying attention to them can win games.</p>
+<ul>
+  <li><strong>Count the open copies.</strong> When one copy of a card is covered, only one space is left for it. If that space is on your opponent's line, you know exactly which card they need, and you can block it first.</li>
+  <li><strong>Make your opponents' cards dead.</strong> Covering the last open space for a card they are likely holding turns it into a dead card in their hand.</li>
+  <li><strong>Watch what gets turned in.</strong> When an opponent announces a dead card, you learn which card they had and that they have just drawn something new.</li>
+  <li><strong>Prefer lines with corners.</strong> The four corners count for every side, so lines through a corner need only four of your own chips and depend on fewer cards.</li>
+</ul>
+<p>For a full set of tips on blocking, jacks and double threats, see our <a href="/strategy/">Sequence strategy guide</a>.</p>
+
+<h2>How are dead cards handled when you play online?</h2>
+<p>With a physical board, it is easy to miss a dead card in your hand, especially in a big game where chips cover much of the board. Online, the game can check the board for you.</p>
+<p>In <a href="https://playsequenceonline.github.io/">Chipline</a>, the free online five-in-a-row card board game, dead cards are marked for you and the swap takes one tap, and new cards are drawn automatically, so you can never lose a card by forgetting to draw. It runs in your browser on a phone or computer with no download or sign-up, and you can play with friends or against the computer.</p>
+
+<div class="cta"><p>Practice spotting dead cards in a real game: free, in your browser.</p><a class="btn" href="https://playsequenceonline.github.io/">Play Chipline free</a></div>
+
+<h2>Dead card rules in context</h2>
+<p>Dead cards are one small part of the game. As a reminder of the basics: the board is 10x10 with 4 free corners, two-eyed jacks are wild, one-eyed jacks remove a chip, and a sequence is five chips in a row across, down or diagonally. With 2 players or 2 teams you need two sequences to win; with 3 players or 3 teams you need one. The full details are in our <a href="/rules/">Sequence rules</a>, and quick answers live in the <a href="/faq/">Sequence FAQ</a>.</p>
+<section class="faq" id="faq">
+<h2>Dead card FAQ</h2>
+<h3>What is a dead card in Sequence?</h3>
+<p>A dead card is a non-jack card whose two matching spaces on the board are both already covered by chips. Because there is nowhere left to play it, the rules let you trade it in for a new card.</p>
+<h3>Can you trade in more than one dead card per turn?</h3>
+<p>No. You can turn in one dead card per turn. If you hold two dead cards, swap one now and the other on your next turn.</p>
+<h3>Is a card dead if only one of its spaces is covered?</h3>
+<p>No. A card is only dead when both of its spaces are covered. If one space is still open, you must play it there or keep it.</p>
+<h3>Do you have to swap a dead card?</h3>
+<p>No. Swapping is optional. You may keep a dead card, but it usually just takes up a slot in your hand, so most players swap it as soon as they can.</p>
+<h3>Can a jack ever be a dead card?</h3>
+<p>No. Jacks have no spaces of their own on the board. A two-eyed jack can go on any open space and a one-eyed jack removes an opponent chip, so a jack always has a use.</p>
+<h3>Can a dead card come back to life?</h3>
+<p>Yes. If a one-eyed jack removes a chip from one of that card&#x27;s spaces, the space opens up again and the card becomes playable. A space inside a completed sequence can never reopen, because completed sequences are locked.</p>
+</section>
+</article>
+<p class="related">More reading: <a href="/rules/#dead-cards">Dead cards in the full rules</a> · <a href="/strategy/">Strategy tips</a> · <a href="/faq/">FAQ</a> · <a href="/blog/sequence-game-board-layout/">Board layout</a> · <a href="/blog/">All posts</a></p>
+</main>
+
+<footer>
+<p><a href="/">Play Chipline</a> · <a href="/rules/">Rules</a> · <a href="/strategy/">Strategy tips</a> · <a href="/faq/">FAQ</a> · <a href="/play-with-friends/">Play with friends online</a> · <a href="/vs-computer/">Play against the computer</a> · <a href="/blog/">Blog</a> · <a href="/privacy/">Privacy</a></p>
+<p>Chipline is an independent game and is not affiliated with or endorsed by the makers of the Sequence board game. Sequence is a trademark of its respective owner and is mentioned here only to describe how the game is played.</p>
+</footer>
+</div>
+</body>
+</html>
