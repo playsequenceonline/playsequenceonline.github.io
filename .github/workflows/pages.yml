@@ -24,6 +24,7 @@ jobs:
           mkdir -p _site
           if [ -f chipline-site.zip ]; then unzip -o chipline-site.zip -d _site; fi
           tar --exclude='./.git' --exclude='./.github' --exclude='./_site' --exclude='./chipline-site.zip' -cf - . | tar -xf - -C _site
+          find _site -type f \( -name '*.html' -o -name '*.xml' -o -name '*.txt' -o -name '*.webmanifest' -o -name '*.json' \) -exec sed -i 's#https://playsequenceonline.github.io#https://playsequencegame.online#g; s#playsequenceonline.github.io#playsequencegame.online#g' {} +
           touch _site/.nojekyll
           ls -laR _site
       - uses: actions/configure-pages@v5
