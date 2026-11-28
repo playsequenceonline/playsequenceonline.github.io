@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Many Sequences Do You Need to Win? | Chipline</title>
+<meta name="description" content="Two sides need 2 sequences to win and three sides need 1. Player-count table, shared-chip rule, corners, jacks and tips to finish your lines faster.">
+<link rel="canonical" href="https://playsequenceonline.github.io/blog/how-many-sequences-to-win/">
+<meta property="og:title" content="How many sequences do you need to win Sequence?">
+<meta property="og:description" content="Two sides need two sequences, three sides need one. Here is the full rule, the shared-chip trick and a table for every player count.">
+<meta property="og:url" content="https://playsequenceonline.github.io/blog/how-many-sequences-to-win/">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://playsequenceonline.github.io/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="How many sequences do you need to win Sequence?">
+<meta name="twitter:description" content="Two sides need two sequences, three sides need one. Here is the full rule, the shared-chip trick and a table for every player count.">
+<meta name="twitter:image" content="https://playsequenceonline.github.io/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+[{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Chipline","item":"https://playsequenceonline.github.io/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://playsequenceonline.github.io/blog/"},{"@type":"ListItem","position":3,"name":"How many sequences do you need to win?","item":"https://playsequenceonline.github.io/blog/how-many-sequences-to-win/"}]},{"@context":"https://schema.org","@type":"BlogPosting","headline":"How many sequences do you need to win Sequence?","description":"Two sides need 2 sequences to win and three sides need 1. Player-count table, shared-chip rule, corners, jacks and tips to finish your lines faster.","url":"https://playsequenceonline.github.io/blog/how-many-sequences-to-win/","mainEntityOfPage":{"@type":"WebPage","@id":"https://playsequenceonline.github.io/blog/how-many-sequences-to-win/"},"image":"https://playsequenceonline.github.io/og.jpg","datePublished":"2026-11-28","dateModified":"2026-11-28","author":{"@type":"Organization","name":"Chipline"},"publisher":{"@type":"Organization","name":"Chipline","url":"https://playsequenceonline.github.io/"},"inLanguage":"en-US"},{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many sequences do you need to win with 2 players?","acceptedAnswer":{"@type":"Answer","text":"Two. In a head-to-head game each player needs two sequences of five, and the two lines may share one chip."}},{"@type":"Question","name":"How many sequences do you need to win with 3 players or 3 teams?","acceptedAnswer":{"@type":"Answer","text":"One. With three sides, the first player or team to complete a single sequence of five wins the game."}},{"@type":"Question","name":"How many sequences do you need to win with 4 players?","acceptedAnswer":{"@type":"Answer","text":"Two. Four players split into 2 teams of 2, and with two sides each team needs two sequences."}},{"@type":"Question","name":"Do sequences have to be in a straight line?","acceptedAnswer":{"@type":"Answer","text":"Yes. A sequence is five spaces in an unbroken straight line: across, down or diagonally. Chips placed in an L shape or with a gap do not count."}},{"@type":"Question","name":"Can both of my sequences use the same corner?","acceptedAnswer":{"@type":"Answer","text":"A corner is one space, so it can be the single shared space between your two sequences, the same way a shared chip would be. Your two lines still cannot share more than one space."}},{"@type":"Question","name":"Can an opponent remove a chip from my finished sequence?","acceptedAnswer":{"@type":"Answer","text":"No. A one-eyed jack can only remove a chip that is not part of a completed sequence, so a finished line is safe for the rest of the game."}}]}]
+</script>
+<script>
+(function(){
+  if(location.hostname !== 'playsequenceonline.github.io') return;
+  var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZRBNPF2GD4';
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag('js', new Date()); gtag('config', 'G-ZRBNPF2GD4');
+})();
+</script>
+<style>
+:root{--bg:#e6ebf1;--panel:#ffffff;--bd:#d3dae4;--ink:#141b26;--muted:#566273;--accent:#ffb400;--accent-ink:#231800;--link:#9a5b00;--red:#e5484d;--blue:#2f6fed;--green:#12a26d}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(90% 60% at 50% 0%,#ffffff,rgba(255,255,255,0) 70%),var(--bg);color:var(--ink);font:17px/1.65 Outfit,system-ui,sans-serif}
+a{color:var(--link)}
+.wrap{max-width:860px;margin:0 auto;padding:20px 18px 60px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0 18px}
+.brand{font-family:"Bricolage Grotesque",Outfit,sans-serif;font-weight:700;font-size:1.5rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:8px}
+.brand i{display:inline-block;width:16px;height:16px;border-radius:50%;background:var(--red);box-shadow:inset 0 0 0 3px rgba(255,255,255,.75),0 1px 2px rgba(0,0,0,.3)}
+.brand i+i{background:var(--blue)}
+.brand i+i+i{background:var(--green)}
+.btn{display:inline-block;padding:12px 22px;border-radius:999px;font-weight:700;text-decoration:none;background:linear-gradient(180deg,#ffd766,var(--accent) 55%,#c48600 140%);color:var(--accent-ink);box-shadow:0 6px 18px rgba(255,180,0,.32)}
+.btn.small{padding:8px 16px;font-size:.95rem}
+.crumbs{font-size:.9rem;color:var(--muted);margin-bottom:6px}
+.crumbs a{color:var(--muted)}
+h1{font-family:"Bricolage Grotesque",Outfit,sans-serif;font-size:clamp(1.9rem,5vw,2.7rem);line-height:1.15;margin:.2em 0 .4em;color:var(--ink)}
+h2{font-family:"Bricolage Grotesque",Outfit,sans-serif;font-size:1.55rem;line-height:1.25;margin:2.2em 0 .5em}
+h3{font-size:1.15rem;margin:1.6em 0 .3em}
+p{margin:.6em 0}
+.lead{font-size:1.12rem;color:#1f2a3a}
+.panel{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:18px 20px;margin:18px 0;box-shadow:0 10px 30px rgba(30,45,70,.08)}
+.answer{border-left:4px solid var(--accent);padding:4px 0 4px 14px;margin:.6em 0 1em}
+table{width:100%;border-collapse:collapse;font-size:.98rem;background:var(--panel);border-radius:12px;overflow:hidden}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--bd);vertical-align:top}
+th{color:var(--muted);font-weight:600}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0}
+ol.steps li{counter-increment:s;position:relative;padding:4px 0 12px 48px}
+ol.steps li::before{content:counter(s);position:absolute;left:0;top:2px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--accent);color:var(--accent-ink)}
+.toc{columns:2;column-gap:28px;padding-left:18px;margin:.4em 0}
+.toc li{margin:2px 0}
+figure{margin:16px 0;text-align:center}
+figure svg{max-width:100%;height:auto}
+figcaption{font-size:.92rem;color:var(--muted);margin-top:6px}
+.cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#fff4d1,#e7f0ff);border:1px solid var(--bd);border-radius:18px;padding:18px 20px;margin:26px 0}
+.cta p{margin:0;font-weight:600}
+.faq h3{margin-top:1.2em}
+footer{margin-top:40px;font-size:.9rem;color:var(--muted);border-top:1px solid var(--bd);padding-top:16px}
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}.flow div{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:14px;text-align:center;font-size:.95rem}.flow b{display:block;font-family:"Bricolage Grotesque",Outfit,sans-serif;font-size:1.05rem}.flow .ph{font-size:2rem;line-height:1.2}@media (max-width:600px){.flow{grid-template-columns:1fr}}
+.print{background:#fff;border:1px solid var(--bd);color:var(--ink);border-radius:999px;padding:8px 16px;font:inherit;font-size:.95rem;cursor:pointer}
+@media (max-width:600px){.toc{columns:1}body{font-size:16px}th,td{padding:8px 6px}}
+@media print{
+  body{background:#fff;color:#000;font-size:12pt}
+  a{color:#000}
+  .panel,.cta{border:1px solid #999;background:#fff;box-shadow:none}
+  header.top .btn,.cta,.print,.no-print{display:none}
+  th{color:#333}
+  ol.steps li::before{background:#000;color:#fff}
+  figcaption{color:#333}
+}
+</style>
+<style>
+.posts{list-style:none;padding:0;margin:18px 0;display:grid;gap:14px}
+.posts li{background:var(--panel);border:1px solid var(--bd);border-radius:18px;padding:16px 20px;box-shadow:0 10px 30px rgba(30,45,70,.06)}
+.posts h2,.posts h3{margin:0 0 .3em;font-size:1.25rem}
+.posts h2 a,.posts h3 a{color:var(--ink);text-decoration:none}
+.posts h2 a:hover,.posts h3 a:hover{text-decoration:underline}
+.meta{font-size:.9rem;color:var(--muted);margin:0 0 .8em}
+.tip{background:var(--panel);border:1px solid var(--bd);border-radius:16px;padding:12px 18px;margin:14px 0}
+.tip h3{margin:.3em 0 .2em}
+.related{margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <a class="brand" href="/" aria-label="Chipline home"><span aria-hidden="true"><i></i><i></i><i></i></span>Chipline</a>
+  <a class="btn small" href="/">Play free</a>
+</header>
+
+<nav class="crumbs" aria-label="Breadcrumb"><a href="/">Chipline</a> › <a href="/blog/">Blog</a> › How many sequences do you need to win?</nav>
+<main>
+<article>
+<h1>How many sequences do you need to win Sequence?</h1>
+<p class="meta">Published 28 November 2026 · Chipline</p>
+<p class="lead answer">You need <b>two sequences</b> to win when there are two sides (two players or two teams), and <b>one sequence</b> when there are three sides. A sequence is five of your chips in a straight line across, down or diagonally. Your two sequences may share one chip, so nine chips can be enough.</p>
+
+<div class="panel">
+<h2 style="margin-top:.2em">Key takeaways</h2>
+<ul>
+  <li>2 sides (2 players, or 2 teams of any size): <b>2 sequences</b> to win.</li>
+  <li>3 sides (3 players, or 3 teams): <b>1 sequence</b> to win.</li>
+  <li>Team size never changes the target. Only the number of sides does.</li>
+  <li>Your second sequence can reuse <b>one</b> chip from your first, but no more.</li>
+  <li>A free corner counts as one of your five, so a corner line needs only four chips.</li>
+  <li>Once a sequence is finished, it is safe: a one-eyed jack cannot remove its chips.</li>
+</ul>
+</div>
+
+<h2>How many sequences to win, by player count</h2>
+<p>The rule is simple once you see it: count the sides, not the people. Two sides race to two sequences; three sides race to one. The table covers every common group size.</p>
+<table>
+  <tr><th scope="col">Players</th><th scope="col">Sides</th><th scope="col">Sequences to win</th></tr>
+  <tr><td>2</td><td>2 players, head-to-head</td><td>2</td></tr>
+  <tr><td>3</td><td>3 players, each alone</td><td>1</td></tr>
+  <tr><td>4</td><td>2 teams of 2</td><td>2</td></tr>
+  <tr><td>6</td><td>2 teams of 3</td><td>2</td></tr>
+  <tr><td>6</td><td>3 teams of 2</td><td>1</td></tr>
+  <tr><td>8</td><td>2 teams of 4</td><td>2</td></tr>
+  <tr><td>9</td><td>3 teams of 3</td><td>1</td></tr>
+  <tr><td>10</td><td>2 teams of 5</td><td>2</td></tr>
+  <tr><td>12</td><td>2 teams of 6</td><td>2</td></tr>
+  <tr><td>12</td><td>3 teams of 4</td><td>1</td></tr>
+</table>
+<p>Hand sizes change with the number of players (7 cards each with 2 players, down to 3 each with 10 or 12), but the sequence target only depends on whether there are two sides or three. The full dealing table is on the <a href="/rules/#players">rules page</a>.</p>
+
+<h2>Why do two sides need two sequences?</h2>
+<p class="answer">With only two sides, every turn is a straight duel: you build, your opponent blocks. A single line of five would end the game quickly and reward the luckiest early hand, so the target is raised to two lines to give blocking and planning more time to matter.</p>
+<p>With three sides, the math flips. Each side gets a turn only once every three turns, and there are two opponents who can block you. Finishing even one line is hard, which is why one sequence is enough. A three-way game also has a natural balance: whoever pulls ahead usually gets blocked by both other sides. There is more on that in our guide to <a href="/blog/sequence-with-3-players/">playing Sequence with 3 people</a>.</p>
+
+<h2>What exactly counts as a sequence?</h2>
+<p>A sequence is five spaces in an unbroken straight line, all holding your color (or a free corner). It can run:</p>
+<ol class="steps">
+  <li><b>Across</b> a row, left to right.</li>
+  <li><b>Down</b> a column, top to bottom.</li>
+  <li><b>Diagonally</b>, in either direction.</li>
+</ol>
+<p>The board is a 10x10 grid of 100 spaces. Every card except the jacks appears twice, and the four corners are free spaces that count for every player. That means a line running through a corner needs only four of your chips. Corners are explained in detail in our post on <a href="/blog/sequence-game-corner-rules/">Sequence corner rules</a>.</p>
+
+<h3>Does a line of six or seven count as more than one sequence?</h3>
+<p>No. Six or seven chips in a row is still one sequence, because two sequences can share only one chip. To get two sequences out of a single straight line, you need nine chips in a row: five for the first sequence, then four more that reuse the last chip of the first.</p>
+
+<h2>Can two sequences share a chip?</h2>
+<p class="answer">Yes, but only one. When you need two sequences, your second line may use one chip from your first line. It cannot use two or more. This is why the minimum is nine chips, not ten, and why a corner can help you even further.</p>
+<p>Shared chips usually happen in one of three shapes:</p>
+<ul>
+  <li><strong>A cross or plus sign.</strong> A horizontal and a vertical line meet at one shared chip in the middle.</li>
+  <li><strong>An X.</strong> Two diagonals cross at one chip.</li>
+  <li><strong>A long line of nine.</strong> Two sequences sit end to end in the same row, column or diagonal, sharing the chip where they meet.</li>
+</ul>
+<p>Planning for a shared chip early is one of the strongest moves in a two-side game. If you build your first line through the center of the board, the middle chip becomes a launch pad for your second line. Our <a href="/strategy/">strategy guide</a> covers this "double threat" idea in more depth.</p>
+
+<h2>Can a one-eyed jack break a finished sequence?</h2>
+<p>No. A one-eyed jack (the jack of spades or the jack of hearts) removes one opponent chip, but only if that chip is <em>not</em> part of a completed sequence. Once your five are in place, call it out and the line is locked. That safety matters a lot when you still need a second sequence: the chip you plan to share is protected the moment the first line is complete.</p>
+<p>Two-eyed jacks (the jack of diamonds and the jack of clubs) are wild, so you can place one on any open space to finish a line. If you want the full breakdown of both jacks, read <a href="/blog/one-eyed-vs-two-eyed-jacks/">one-eyed vs two-eyed jacks</a>.</p>
+
+<h2>Can you play to one sequence with two players?</h2>
+<p>The standard rule for two sides is two sequences. Some families agree on a house rule of one sequence for a shorter game, which can work well for younger kids or a quick round before dinner. Just agree before the first card is played, because the target changes how aggressively each side blocks. If you are teaching beginners, a one-sequence practice game is a gentle way to learn how lines and jacks work before moving to the full rule.</p>
+
+<h2>What happens if nobody can finish their sequences?</h2>
+<p>It does not happen often, but a board can get crowded. Two rules keep the game moving:</p>
+<ul>
+  <li><strong>Dead cards.</strong> If both spaces for a card in your hand are covered, it is a dead card. At the start of your turn you can discard it and draw a replacement (one per turn). See <a href="/blog/sequence-dead-card-rules/">dead card rules</a>.</li>
+  <li><strong>Jacks open space.</strong> One-eyed jacks clear spaces that are not locked in a sequence, so the board keeps changing until someone breaks through.</li>
+</ul>
+<p>If your group ever reaches a true stalemate, the fair house fix is to agree that the game is a draw and start a new one.</p>
+
+<h2>How to reach your sequences faster</h2>
+<p>Knowing the target is half the battle. These habits help you get there:</p>
+<ol class="steps">
+  <li><b>Count the sides first.</b> In a three-side game, every line of four on the board is an emergency, for you or against you.</li>
+  <li><b>Use the corners.</b> A corner line needs only four chips, which is like getting a free turn.</li>
+  <li><b>Build through shared spaces.</b> In a two-side game, aim for lines that cross so one chip can serve both sequences.</li>
+  <li><b>Save your two-eyed jacks.</b> A wild jack is most valuable when it finishes a line of four or blocks an opponent's.</li>
+  <li><b>Block early, not late.</b> Breaking up a line of three is cheaper than scrambling to stop a line of four.</li>
+</ol>
+
+<div class="cta"><p>Practice both targets now: play Chipline free in your browser, no download needed.</p><a class="btn" href="https://playsequenceonline.github.io/">Play Chipline free</a></div>
+
+<h2>Practice the rule online</h2>
+<p><a href="https://playsequenceonline.github.io/">Chipline</a> is a free five-in-a-row card board game that plays like Sequence. It sets the right target for you: choose two sides and you play to two sequences, choose three and the first line of five wins. You can play solo against a computer or open a room and send the link to friends, with no download or sign-up. It is an easy way to try a cross-shaped double sequence or a corner line without setting up a physical board.</p>
+
+<section class="faq" id="faq">
+<h2>Frequently asked questions</h2>
+<h3>How many sequences do you need to win with 2 players?</h3>
+<p>Two. In a head-to-head game each player needs two sequences of five, and the two lines may share one chip.</p>
+<h3>How many sequences do you need to win with 3 players or 3 teams?</h3>
+<p>One. With three sides, the first player or team to complete a single sequence of five wins the game.</p>
+<h3>How many sequences do you need to win with 4 players?</h3>
+<p>Two. Four players split into 2 teams of 2, and with two sides each team needs two sequences.</p>
+<h3>Do sequences have to be in a straight line?</h3>
+<p>Yes. A sequence is five spaces in an unbroken straight line: across, down or diagonally. Chips placed in an L shape or with a gap do not count.</p>
+<h3>Can both of my sequences use the same corner?</h3>
+<p>A corner is one space, so it can be the single shared space between your two sequences, the same way a shared chip would be. Your two lines still cannot share more than one space.</p>
+<h3>Can an opponent remove a chip from my finished sequence?</h3>
+<p>No. A one-eyed jack can only remove a chip that is not part of a completed sequence, so a finished line is safe for the rest of the game.</p>
+</section>
+</article>
+<p class="related">More reading: <a href="/rules/">Sequence rules</a> · <a href="/strategy/">Strategy tips</a> · <a href="/faq/">FAQ</a> · <a href="/blog/sequence-rules-for-2-players/">Rules for 2 players</a> · <a href="/blog/">All posts</a></p>
+</main>
+
+<footer>
+<p><a href="/">Play Chipline</a> · <a href="/rules/">Rules</a> · <a href="/strategy/">Strategy tips</a> · <a href="/faq/">FAQ</a> · <a href="/play-with-friends/">Play with friends online</a> · <a href="/vs-computer/">Play against the computer</a> · <a href="/blog/">Blog</a> · <a href="/privacy/">Privacy</a></p>
+<p>Chipline is an independent game and is not affiliated with or endorsed by the makers of the Sequence board game. Sequence is a trademark of its respective owner and is mentioned here only to describe how the game is played.</p>
+</footer>
+</div>
+</body>
+</html>
